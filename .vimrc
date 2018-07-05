@@ -1,37 +1,36 @@
 " https://github.com/w0rp/ale.git
+" https://github.com/Shougo/neocomplete.vim.git
+" https://github.com/tell-k/vim-autopep8.git
+" https://github.com/tpope/vim-fugitive.git
+" https://github.com/mhinz/vim-signify.git
 " https://github.com/bkad/CamelCaseMotion.git
 " https://github.com/davidhalter/jedi-vim.git
 " https://github.com/davidhalter/jedi.git
 " https://github.com/davidhalter/parso.git
-" https://github.com/Shougo/neocomplete.vim.git
-" https://github.com/b3niup/numbers.vim.git
-" https://github.com/tell-k/vim-autopep8.git
-" https://github.com/tpope/vim-fugitive.git
-" https://github.com/mhinz/vim-signify.git
 
 filetype plugin indent on
 set nocompatible
-set list
 set title
 set nowrap
 set ruler
-set showmode
-set showcmd
 set wildmenu
-set showmatch
 set hidden
-set ignorecase
-set smartcase
 set magic
 set scrolloff=0
 set backspace=2
-set showtabline=2
-set laststatus=2
 set textwidth=119
+set winwidth=119
 set history=10000
 set undolevels=10000
 set path+=**
 set wildignore=*.swp,*.bak,*.pyc,*.class
+
+" vim show me more
+    set showmode
+    set showcmd
+    set showmatch
+    set showtabline=2
+    set laststatus=2
 
 " search
     set incsearch
@@ -56,8 +55,8 @@ set wildignore=*.swp,*.bak,*.pyc,*.class
     set fileencoding=utf-8
 
 " number
-    set relativenumber
     set number
+    set relativenumber
 
 " cursor
     set cursorline
@@ -80,9 +79,14 @@ set wildignore=*.swp,*.bak,*.pyc,*.class
     set foldcolumn=1
     set foldminlines=0
 
-" setlocal spell spelllang=pl
-" set listchars=eol:¶,tab:»·,trail:·,extends:>,precedes:<
-set listchars=tab:»·,trail:·,extends:>,precedes:<
+" show whitespace
+    set list
+    set listchars=tab:»·,trail:·,extends:>,precedes:< " without EOL
+    " set listchars=eol:¶,tab:»·,trail:·,extends:>,precedes:< " with EOL
+
+" case insensitive search
+    set ignorecase
+    set smartcase
 
 " tabline & statusline
     set tabline=%4*\ %n\/%{len(filter(range(1,bufnr('$')),'buflisted(v:val)'))}\ %{expand('%:p')}\ %m
@@ -123,6 +127,10 @@ set listchars=tab:»·,trail:·,extends:>,precedes:<
 
     " F9 - dos to unix
         nnoremap <F9> :e ++ff=unix<cr> :%s/\r//g<cr>
+
+    " F10 - fold lines without search pattern
+        set foldexpr=getline(v:lnum)!~@/
+        nnoremap <F10> :set foldmethod=expr<CR><Bar>zM
 
 " map leader
     let mapleader = "\<Space>"
@@ -320,7 +328,8 @@ set listchars=tab:»·,trail:·,extends:>,precedes:<
     set background=light
     set t_Co=256
 
-    call matchadd('ColorColumn', '\%81v', 100)
+    " call matchadd('ColorColumn', '\%81v', 100)
+    call matchadd('DiffDelete', '\%81v', 100)
 
     " Syntax
         syntax on
