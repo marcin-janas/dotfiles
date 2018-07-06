@@ -102,7 +102,7 @@ set wildignore=*.swp,*.bak,*.pyc,*.class
         set statusline+=%r%w\ %P\ \                            "Modified? Readonly? Top/bot.
     endif
 
-" map Fx
+" mapping function keys
     " F2 - toggle copy mode
         nnoremap <F2> :CopyModeToggle<cr>
 
@@ -132,26 +132,22 @@ set wildignore=*.swp,*.bak,*.pyc,*.class
         set foldexpr=getline(v:lnum)!~@/
         nnoremap <F10> :set foldmethod=expr<CR><Bar>zM
 
-" map leader
+" change leader
     let mapleader = "\<Space>"
 
-" map edit and reload .vimrc
+" edit and reload .vimrc
     map <leader>ve :e $MYVIMRC<cr>
     map <leader>vs :source $MYVIMRC<cr> :echo "Reload .vimrc..."<cr>
 
-" map spell
+" spell
     nmap <silent> <Leader>se :set spell spelllang=en_us<CR>
     nmap <silent> <Leader>sp :set spell spelllang=pl<CR>
 
-" map git
+" mapping for git/fugitive.vim plugin
     map <leader>gs :Gstatus<cr>
     map <leader>gc :Gcommit<cr>
     map <leader>gw :Gwrite<cr>
     map <leader>gd :Gdiff<cr>
-
-" use semicolon ;) as colon :)
-    " nnoremap ; :
-    " nnoremap : ;
 
 " better working shifting blocks in visual mode
     vnoremap < <gv
@@ -160,6 +156,12 @@ set wildignore=*.swp,*.bak,*.pyc,*.class
 " better movement between folded lines
     nnoremap j gj
     nnoremap k gk
+
+" easier switching between windows
+    nnoremap <c-h> <c-w>h
+    nnoremap <c-j> <c-w>j
+    nnoremap <c-k> <c-w>k
+    nnoremap <c-l> <c-w>l
 
 " better/faster buffer management
     nmap <silent> <leader>l :ls<cr>:b
@@ -177,16 +179,20 @@ set wildignore=*.swp,*.bak,*.pyc,*.class
 " quick jump to shell
     nmap <silent> <leader><leader> :shell<cr>
 
-" before save remove whitespace
-    autocmd BufWritePre * :%s/\s\+$//e
-
 " autoreload .vimrc and *.vim
     autocmd! BufWritePost .vimrc source %
     autocmd! BufWrite *.vim :source %
 
-" remember cursor position and open in this same place
+" remember cursor position and open file in this same place
     set viminfo='10,\"100,:20,%,n~/.viminfo
     au BufReadPost * if line("'\"") > 0|if line("'\"") <=line("$")|exe("norm '\"")|else|exe "norm $"|endif|endif
+
+" before save remove whitespace
+    " autocmd BufWritePre * :%s/\s\+$//e
+
+" use semicolon ;) as colon :)
+    " nnoremap ; :
+    " nnoremap : ;
 
 " ^functions
 " CopyModeToggle()
