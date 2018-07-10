@@ -6,24 +6,19 @@
 " https://github.com/bkad/CamelCaseMotion.git
 " https://github.com/davidhalter/jedi-vim.git
 " https://github.com/davidhalter/jedi.git
-" https://github.com/davidhalter/parso.git
 
-filetype plugin indent on
-set nocompatible
-set title
-set nowrap
-set ruler
-set wildmenu
-set hidden
-set magic
-set scrolloff=0
-set backspace=2
-set textwidth=119
-set winwidth=119
-set history=10000
-set undolevels=10000
-set path+=**
-set wildignore=*.swp,*.bak,*.pyc,*.class
+" @ the good beginning
+    filetype plugin indent on
+    set nocompatible
+    set nowrap
+    set title
+    set magic
+    set textwidth=119
+    set winwidth=119
+    set wildignore=*.swp,*.bak,*.pyc,*.class
+    " set ruler
+    " set scrolloff=0
+    " set backspace=2
 
 " vim show me more
     set showmode
@@ -31,21 +26,40 @@ set wildignore=*.swp,*.bak,*.pyc,*.class
     set showmatch
     set showtabline=2
     set laststatus=2
+    set wildmenu
+    set wildmode=longest:list,full
 
-" search
+" search in file
     set incsearch
     set hlsearch
+    augroup toggle_search
+        autocmd!
+        autocmd InsertEnter * set nohlsearch
+        autocmd InsertLeave * set hlsearch
+    augroup END
+    " case insensitive search
+        set ignorecase
+        set smartcase
+
+" search for files
+    set path+=**
+    " ctrl+f to find and ctrl+g to grep
+        nmap <leader>f :find *
+        nmap <leader>g :grep *
 
 " shift
     set shiftround
     set shiftwidth=4
+    " better working shifting blocks in visual mode
+        vnoremap < <gv
+        vnoremap > >gv
 
-" tab & indent
-    set expandtab
-    set smarttab
+" indent & tab
     set smartindent
     set autoindent
     set copyindent
+    set expandtab
+    set smarttab
     set tabstop=4
     set softtabstop=4
 
@@ -57,10 +71,19 @@ set wildignore=*.swp,*.bak,*.pyc,*.class
 " number
     set number
     set relativenumber
+    augroup toggle_number
+        autocmd!
+        autocmd InsertEnter * set norelativenumber
+        autocmd InsertLeave * set relativenumber
+    augroup END
 
 " cursor
     set cursorline
     set nocursorcolumn
+
+" history & undo
+    set history=10000
+    set undolevels=10000
 
 " backups
     set nobackup
@@ -76,17 +99,24 @@ set wildignore=*.swp,*.bak,*.pyc,*.class
 " fold options
     set nofoldenable
     set foldmethod=indent
-    set foldcolumn=1
     set foldminlines=0
+    set foldcolumn=1
+    " better movement between folded lines
+        nnoremap j gj
+        nnoremap k gk
 
 " show whitespace
     set list
     set listchars=tab:»·,trail:·,extends:>,precedes:< " without EOL
     " set listchars=eol:¶,tab:»·,trail:·,extends:>,precedes:< " with EOL
 
-" case insensitive search
-    set ignorecase
-    set smartcase
+" buffer
+    set hidden
+    " better/faster buffer management
+        nmap <silent> <leader>l :ls<cr>:b
+        nmap <silent> <leader>p :bp<cr>
+        nmap <silent> <leader>n :bn<cr>
+        nmap <silent> <leader>d :bd<cr>
 
 " tabline & statusline
     set tabline=%4*\ %n\/%{len(filter(range(1,bufnr('$')),'buflisted(v:val)'))}\ %{expand('%:p')}\ %m
@@ -149,29 +179,11 @@ set wildignore=*.swp,*.bak,*.pyc,*.class
     map <leader>gw :Gwrite<cr>
     map <leader>gd :Gdiff<cr>
 
-" better working shifting blocks in visual mode
-    vnoremap < <gv
-    vnoremap > >gv
-
-" better movement between folded lines
-    nnoremap j gj
-    nnoremap k gk
-
 " easier switching between windows
     nnoremap <c-h> <c-w>h
     nnoremap <c-j> <c-w>j
     nnoremap <c-k> <c-w>k
     nnoremap <c-l> <c-w>l
-
-" better/faster buffer management
-    nmap <silent> <leader>l :ls<cr>:b
-    nmap <silent> <leader>p :bp<cr>
-    nmap <silent> <leader>n :bn<cr>
-    nmap <silent> <leader>d :bd<cr>
-
-" ctrl+f to find and ctrl+g to grep
-    nmap <leader>f :find *
-    nmap <leader>g :grep *
 
 " press Enter to turn off search result highlighting
     nmap <silent> <cr> :nohlsearch<cr>
@@ -202,20 +214,22 @@ set wildignore=*.swp,*.bak,*.pyc,*.class
         endif
         if !g:copy_mode_enabled
             let g:copy_mode_enabled = 1
-            :NumbersDisable
-            :set nonumber
-            :set nofoldenable
-            :set foldcolumn=0
-            :set showtabline=0
-            :set laststatus=0
+            set nonumber
+            set norelativenumber
+            set nofoldenable
+            set foldcolumn=0
+            set showtabline=0
+            set laststatus=0
+            SignifyDisable
         else
             let g:copy_mode_enabled = 0
-            :NumbersEnable
-            :set number
-            :set foldenable
-            :set foldcolumn=1
-            :set showtabline=2
-            :set laststatus=2
+            set number
+            set relativenumber
+            " set foldenable
+            set foldcolumn=1
+            set showtabline=2
+            set laststatus=2
+            SignifyEnable
         endif
         echo g:copy_mode_enabled
     endfunction
@@ -341,7 +355,6 @@ set wildignore=*.swp,*.bak,*.pyc,*.class
         syntax on
         syntax enable
         syntax reset
-
 
     hi Normal cterm=none ctermbg=lightgray ctermfg=darkgray
     hi NonText cterm=none ctermfg=darkred
