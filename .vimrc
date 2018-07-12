@@ -32,14 +32,16 @@
 " search in file
     set incsearch
     set hlsearch
+    " case insensitive search
+        set ignorecase
+        set smartcase
+    " press Enter to turn off search result highlighting
+        nmap <silent> <cr> :nohlsearch<cr> :set foldmethod=indent<cr> :set nofoldenable<cr>
     augroup toggle_search
         autocmd!
         autocmd InsertEnter * set nohlsearch
         autocmd InsertLeave * set hlsearch
     augroup END
-    " case insensitive search
-        set ignorecase
-        set smartcase
 
 " search for files
     set path+=**
@@ -160,7 +162,7 @@
 
     " F10 - fold lines without search pattern
         set foldexpr=getline(v:lnum)!~@/
-        nnoremap <F10> :set foldmethod=expr<CR><Bar>zM
+        nnoremap <F10> :set hlsearch<cr> :set foldmethod=expr<cr><bar>zM
 
 " change leader
     let mapleader = "\<Space>"
@@ -185,8 +187,15 @@
     nnoremap <c-k> <c-w>k
     nnoremap <c-l> <c-w>l
 
-" press Enter to turn off search result highlighting
-    nmap <silent> <cr> :nohlsearch<cr>
+" automatic closing quotation mark, brackets etc.
+    inoremap " ""<left>
+    inoremap ' ''<left>
+    inoremap ( ()<left>
+    inoremap [ []<left>
+    inoremap { {}<left>
+    inoremap < <><left>
+    inoremap {<cr> {<cr>}<esc>O
+    inoremap {;<cr> {<cr>};<esc>O
 
 " quick jump to shell
     nmap <silent> <leader><leader> :shell<cr>
