@@ -13,12 +13,22 @@
     set nowrap
     set title
     set magic
+    set lazyredraw
+    set modelines=0
     set textwidth=119
     set winwidth=119
     set wildignore=*.swp,*.bak,*.pyc,*.class
-    " set ruler
-    " set scrolloff=0
-    " set backspace=2
+    set ruler
+    set scrolloff=0
+    set backspace=2
+
+" change leader
+    let mapleader = "\<Space>"
+
+" make the keyboard fast
+    set ttyfast
+    set ttyscroll=3
+    set timeout timeoutlen=1000 ttimeoutlen=50
 
 " vim show me more
     set showmode
@@ -37,11 +47,12 @@
         set smartcase
     " press Enter to turn off search result highlighting
         nmap <silent> <cr> :nohlsearch<cr> :set foldmethod=indent<cr> :set nofoldenable<cr>
-    augroup toggle_search
-        autocmd!
-        autocmd InsertEnter * set nohlsearch
-        autocmd InsertLeave * set hlsearch
-    augroup END
+    " toggle_search
+        augroup toggle_search
+            autocmd!
+            autocmd InsertEnter * set nohlsearch
+            autocmd InsertLeave * set hlsearch
+        augroup END
 
 " search for files
     set path+=**
@@ -73,11 +84,12 @@
 " number
     set number
     set relativenumber
-    augroup toggle_number
-        autocmd!
-        autocmd InsertEnter * set norelativenumber
-        autocmd InsertLeave * set relativenumber
-    augroup END
+    " toggle_number
+        augroup toggle_number
+            autocmd!
+            autocmd InsertEnter * set norelativenumber
+            autocmd InsertLeave * set relativenumber
+        augroup END
 
 " cursor
     set cursorline
@@ -114,11 +126,15 @@
 
 " buffer
     set hidden
+    " autosave
+        autocmd BufLeave * :wa
+        autocmd TextChanged * :wa
+        autocmd InsertLeave * wa
     " better/faster buffer management
-        nmap <silent> <leader>l :ls<cr>:b
-        nmap <silent> <leader>p :bp<cr>
-        nmap <silent> <leader>n :bn<cr>
-        nmap <silent> <leader>d :bd<cr>
+        nmap <leader>l :ls<cr>:b
+        nmap <leader>p :bp<cr>
+        nmap <leader>n :bn<cr>
+        nmap <leader>d :bd<cr>
 
 " tabline & statusline
     set tabline=%4*\ %n\/%{len(filter(range(1,bufnr('$')),'buflisted(v:val)'))}\ %{expand('%:p')}\ %m
@@ -163,9 +179,6 @@
     " F10 - fold lines without search pattern
         set foldexpr=getline(v:lnum)!~@/
         nnoremap <F10> :set hlsearch<cr> :set foldmethod=expr<cr><bar>zM
-
-" change leader
-    let mapleader = "\<Space>"
 
 " edit and reload .vimrc
     map <leader>ve :e $MYVIMRC<cr>
