@@ -1,11 +1,9 @@
 " https://github.com/w0rp/ale.git
 " https://github.com/Shougo/neocomplete.vim.git
+" https://github.com/davidhalter/jedi-vim.git
 " https://github.com/tell-k/vim-autopep8.git
 " https://github.com/tpope/vim-fugitive.git
 " https://github.com/mhinz/vim-signify.git
-" https://github.com/bkad/CamelCaseMotion.git
-" https://github.com/davidhalter/jedi-vim.git
-" https://github.com/davidhalter/jedi.git
 
 " @ the good beginning
     filetype plugin indent on
@@ -52,7 +50,7 @@
             autocmd!
             autocmd InsertEnter * set nohlsearch
             autocmd InsertLeave * set hlsearch
-        augroup END
+        augroup end
 
 " search for files
     set path+=**
@@ -89,7 +87,7 @@
             autocmd!
             autocmd InsertEnter * set norelativenumber
             autocmd InsertLeave * set relativenumber
-        augroup END
+        augroup end
 
 " cursor
     set cursorline
@@ -200,15 +198,31 @@
     nnoremap <c-k> <c-w>k
     nnoremap <c-l> <c-w>l
 
-" automatic closing quotation mark, brackets etc.
+" automatically closing quotation mark, brackets etc.
     inoremap " ""<left>
+    inoremap "<space> "
+    inoremap "<cr> "
+
     inoremap ' ''<left>
+    inoremap '<space> '
+    inoremap '<cr> '
+
     inoremap ( ()<left>
+    inoremap (<space> (
+    inoremap (<cr> (
+
     inoremap [ []<left>
-    inoremap { {}<left>
+    inoremap [<space> [
+    inoremap [<cr> [
+
     inoremap < <><left>
-    inoremap {<cr> {<cr>}<esc>O
-    inoremap {;<cr> {<cr>};<esc>O
+    inoremap <<space> <
+    inoremap <<cr> <
+
+    inoremap { {}<left>
+    inoremap {<space> {
+    inoremap {<cr> {<cr><cr>}<left><bs><up><tab><tab>
+    inoremap {;<cr> {<cr><cr>};<left><left><bs><up><tab><tab>
 
 " quick jump to shell
     nmap <silent> <leader><leader> :shell<cr>
@@ -294,10 +308,10 @@
     inoremap <expr><C-l>     neocomplete#complete_common_string()
 
     " Enable omni completion.
+    autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
     autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
     autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
     autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-    autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
     autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 
     " Enable heavy omni completion.
