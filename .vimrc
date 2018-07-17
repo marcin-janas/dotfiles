@@ -26,16 +26,19 @@
 " make the keyboard fast
     set ttyfast
     set ttyscroll=3
-    set timeout timeoutlen=1000 ttimeoutlen=50
+    set timeout timeoutlen=500 ttimeoutlen=50
 
 " vim show me more
     set showmode
     set showcmd
-    set showmatch
     set showtabline=2
     set laststatus=2
     set wildmenu
     set wildmode=longest:list,full
+
+" match
+    set showmatch
+    set matchpairs+=<:>
 
 " search in file
     set incsearch
@@ -57,6 +60,10 @@
     " ctrl+f to find and ctrl+g to grep
         nmap <leader>f :find *
         nmap <leader>g :grep *
+
+" split
+    set splitbelow
+    set splitright
 
 " shift
     set shiftround
@@ -82,6 +89,7 @@
 " number
     set number
     set relativenumber
+    set numberwidth=6
     " toggle_number
         augroup toggle_number
             autocmd!
@@ -183,8 +191,8 @@
     map <leader>vs :source $MYVIMRC<cr> :echo "Reload .vimrc..."<cr>
 
 " spell
-    nmap <silent> <Leader>se :set spell spelllang=en_us<CR>
-    nmap <silent> <Leader>sp :set spell spelllang=pl<CR>
+    nmap <silent> <Leader>se :set spell spelllang=en_us<cr>
+    nmap <silent> <Leader>sp :set spell spelllang=pl<cr>
 
 " mapping for git/fugitive.vim plugin
     map <leader>gs :Gstatus<cr>
@@ -353,31 +361,31 @@
 "  Omni completion
     set omnifunc=syntaxcomplete#Complete
 
-" special options for * .py
+" special options for Python
     let python_highlight_all = 1
     au FileType python syn keyword pythonDecorator self False class finally is return None continue for lambda try True from nonlocal while and del global not with as elif if or yield assert else import pass break except in raise async await
     au BufRead,BufNewFile *.py set shiftwidth=4
     au BufRead,BufNewFile *.py set softtabstop=4
     au BufRead,BufNewFile *.py set expandtab
-    au BufRead,BufNewFile *.py iab ifm if __name__ == '__main__':
+    au BufRead,BufNewFile *.py iab ifm if __name__ == '__main__':<del><del>
 
-" special options for * .c
-    au BufRead,BufNewFile *.c set shiftwidth=4
-    au BufRead,BufNewFile *.c set softtabstop=4
+" special options for Yaml
+    au BufRead,BufNewFile *.{yml,yaml} set shiftwidth=2
+    au BufRead,BufNewFile *.{yml,yaml} set softtabstop=2
+    au BufRead,BufNewFile *.{yml,yaml} set expandtab
 
-" special options for * .h
-    au BufRead,BufNewFile *.h set shiftwidth=4
-    au BufRead,BufNewFile *.h set softtabstop=4
+" special options for Jinja2
+    au BufRead,BufNewFile *.{j2} iab % % %<left><left>
 
-" special options for * .pm
-    au BufRead,BufNewFile *.pm set shiftwidth=4
-    au BufRead,BufNewFile *.pm set softtabstop=4
-    au BufRead,BufNewFile *.pm set noexpandtab
+" special options for C/C++
+    au BufRead,BufNewFile *.{c,cpp,h,hpp} set shiftwidth=4
+    au BufRead,BufNewFile *.{c,cpp,h,hpp} set softtabstop=4
+    au BufRead,BufNewFile * iab #i #include <><del><del>
 
-" special options for * .pl
-    au BufRead,BufNewFile *.pl set shiftwidth=4
-    au BufRead,BufNewFile *.pl set softtabstop=4
-    au BufRead,BufNewFile *.pl set noexpandtab
+" special options for Perl
+    au BufRead,BufNewFile *.{pl,pm} set shiftwidth=4
+    au BufRead,BufNewFile *.{pl,pm} set softtabstop=4
+    au BufRead,BufNewFile *.{pl,pm} set noexpandtab
 
 " ^colorscheme
     hi clear
