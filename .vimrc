@@ -26,7 +26,7 @@
 " make the keyboard fast
     set ttyfast
     set ttyscroll=3
-    set timeout timeoutlen=500 ttimeoutlen=50
+    set timeout timeoutlen=500 ttimeoutlen=5
 
 " vim show me more
     set showmode
@@ -233,7 +233,7 @@
     inoremap {;<cr> {<cr><cr>};<left><left><bs><up><tab><tab>
 
 " quick jump to shell
-    nmap <silent> <leader><leader> :shell<cr>
+    nmap <silent> <leader>s :shell<cr>
 
 " autoreload .vimrc and *.vim
     autocmd! BufWritePost .vimrc source %
@@ -282,10 +282,11 @@
 
 " ^plugins
 " ^ale
-    " Check Python files with flake8 and pylint.
+    packloadall
+    silent! helptags ALL
     let b:ale_linters = ['flake8', 'pylint']
-    " " Fix Python files with autopep8 and yapf.
     let b:ale_fixers = ['autopep8', 'yapf']
+    let g:ale_completion_enabled = 1
 " ale$
 
 " ^neocomplete
