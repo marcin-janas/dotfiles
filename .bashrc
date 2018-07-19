@@ -27,7 +27,9 @@ export_ps1() {
     CYAN="\[\033[1;36m\]";
     GREEN="\[\033[1;32m\]";
     CLEAR="\[\033[00m\]";
-    export PS1="$GREEN\u$CLEAR@$CYAN\h$CLEAR:$BLUE\w$CLEAR$(__git_ps1)$CLEAR # "
+    VENV=$(basename $VIRTUAL_ENV 2>/dev/null)
+    [ -z "$VENV" ] && export PS1="$GREEN\u$CLEAR@$CYAN\h$CLEAR:$BLUE\w$CLEAR$(__git_ps1)$CLEAR # " \
+        || export PS1="($VENV) $GREEN\u$CLEAR@$CYAN\h$CLEAR:$BLUE\w$CLEAR$(__git_ps1)$CLEAR # "
 }
 
 vim_init_plugins() {
@@ -123,14 +125,15 @@ alias lst='ls -hFtal | grep $(date +%Y-%m-%d)' # ls Today
 
 # git alias
 alias g='git'
-alias ga='git add'
-alias gb='git branch'
-alias gc='git commit -s -m'
-alias gd='git diff'
-alias go='git checkout'
-alias gs='git status'
-alias gl='git log'
-alias gpfm='git push-for-master'
+alias ga='g add'
+alias gb='g branch'
+alias gc='g commit -s -m'
+alias gd='g diff'
+alias gdh='g diff HEAD'
+alias go='g checkout'
+alias gs='g status'
+alias gl='g plog'
+alias gpfm='g push-for-master'
 
 # cd alias
 alias ..='cd ..'
@@ -159,3 +162,10 @@ alias rl="source /home/$USER/.bashrc; echo Reload ~/.bashrc"
 alias cds="cd /home/$USER/src/"
 alias am='alsamixer  -g'
 # alias which='type -a'
+
+# docker alias
+alias d='docker'
+alias dl='d container ls --all'
+alias dp='d ps -a'
+alias dk='d kill'
+alias de='d exec -it'
