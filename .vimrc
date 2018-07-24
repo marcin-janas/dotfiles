@@ -19,6 +19,7 @@
     set ruler
     set scrolloff=0
     set backspace=2
+    let &keywordprg=':help'
 
 " change leader
     let mapleader = "\<Space>"
@@ -62,7 +63,7 @@
         nmap <leader>g :grep *
 
 " split
-    set splitbelow
+    " set splitbelow
     set splitright
 
 " shift
@@ -382,6 +383,7 @@
     au BufRead,BufNewFile *.{c,cpp,h,hpp} set shiftwidth=4
     au BufRead,BufNewFile *.{c,cpp,h,hpp} set softtabstop=4
     au BufRead,BufNewFile * iab #i #include <><del><del>
+    inoremap /* /*  */<left><left><left>
 
 " special options for Perl
     au BufRead,BufNewFile *.{pl,pm} set shiftwidth=4
@@ -418,7 +420,7 @@
     hi Visual cterm=none ctermbg=white
     hi Comment cterm=none ctermfg=gray
     hi Constant cterm=bold ctermfg=none
-    hi Todo cterm=bold ctermfg=none
+    hi Todo cterm=bold ctermfg=brown ctermbg=253
     hi Type cterm=bold ctermfg=none
     hi Special cterm=bold ctermfg=none
     hi Underlined cterm=none ctermfg=none
@@ -460,17 +462,17 @@
         hi DiffText cterm=bold ctermfg=none ctermbg=226
 
     " Signify
-        hi SignColumn cterm=none ctermbg=15 ctermfg=black
-        hi SignifyLineAdd cterm=none ctermbg=15 ctermfg=black
-        hi SignifyLineChange cterm=none ctermbg=15 ctermfg=black
-        hi SignifyLineDelete cterm=none ctermbg=15 ctermfg=black
-        hi SignifyLineChangeDelete cterm=none ctermbg=15 ctermfg=black
-        hi SignifyLineDeleteFirstLine cterm=none ctermbg=15 ctermfg=black
-        hi SignifySignAdd cterm=none ctermbg=2 ctermfg=black
-        hi SignifySignChange cterm=none ctermbg=3 ctermfg=black
-        hi SignifySignDelete cterm=none ctermbg=1 ctermfg=black
-        hi SignifySignChangeDelete cterm=none ctermbg=15 ctermfg=black
-        hi SignifySignDeleteFirstLine cterm=none ctermbg=15 ctermfg=black
+        hi SignColumn cterm=none ctermbg=253 ctermfg=0
+        hi SignifyLineAdd cterm=none ctermbg=253 ctermfg=0
+        hi SignifyLineChange cterm=none ctermbg=253 ctermfg=0
+        hi SignifyLineDelete cterm=none ctermbg=253 ctermfg=0
+        hi SignifyLineChangeDelete cterm=none ctermbg=253 ctermfg=0
+        hi SignifyLineDeleteFirstLine cterm=none ctermbg=253 ctermfg=0
+        hi SignifySignAdd cterm=none ctermbg=121 ctermfg=0
+        hi SignifySignChange cterm=none ctermbg=229 ctermfg=0
+        hi SignifySignDelete cterm=none ctermbg=224 ctermfg=0
+        hi SignifySignChangeDelete cterm=none ctermbg=253 ctermfg=0
+        hi SignifySignDeleteFirstLine cterm=none ctermbg=253 ctermfg=0
 
     " User
         hi User0 ctermfg=black ctermbg=gray cterm=bold
