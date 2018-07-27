@@ -144,17 +144,19 @@
         nmap <leader>d :bd<cr>
 
 " tabline & statusline
-    set tabline=%4*\ %n\/%{len(filter(range(1,bufnr('$')),'buflisted(v:val)'))}\ %{expand('%:p')}\ %m
+    set tabline=\ %n\/%{len(filter(range(1,bufnr('$')),'buflisted(v:val)'))}\ %{expand('%:p:h')}
     if has("statusline")
         set statusline=
-        set statusline+=%1*\ %y\                               "FileType
-        set statusline+=%2*\ %{''.(&fenc!=''?&fenc:&enc).''}\  "Encoding
-        set statusline+=%2*\ %{(&bomb?\",BOM\":\"\")}\         "BOM
-        set statusline+=%3*\ %{&ff}\                           "FileFormat (dos/unix..)
+        set statusline+=%1*\ \ %f\ %m\ \                         "FileName
+        set statusline+=%2*\ %y\                               "FileType
+        set statusline+=%3*\ %{''.(&fenc!=''?&fenc:&enc).''}\  "Encoding
+        set statusline+=%3*\ %{(&bomb?\",BOM\":\"\")}\         "BOM
+        set statusline+=%4*\ %{&ff}\                           "FileFormat (dos/unix..)
         set statusline+=%5*\ %{&spelllang}\                    "Spellanguage
-        set statusline+=%=\ (%p%%)\ %l/%L\                     "Rownumber/total (%)
-        set statusline+=%c\                                    "Colnr
-        set statusline+=%r%w\ %P\ \                            "Modified? Readonly? Top/bot.
+        set statusline+=%1*%=%2*\ %c\                             "Colnr
+        set statusline+=%3*\ %l/%L\                            "Rownumber/total
+        set statusline+=%4*%=\ %p%%\                  "Rownumber/total (%)
+        set statusline+=%5*\ %P\                            "Modified? Readonly? Top/bot.
     endif
 
 " mapping function keys
@@ -403,9 +405,9 @@
         syntax enable
         syntax reset
 
-    hi Normal cterm=none ctermbg=lightgray ctermfg=darkgray
+    hi Normal cterm=none ctermbg=15 ctermfg=243
     hi NonText cterm=none ctermfg=darkred
-    hi LineNr cterm=none ctermbg=white ctermfg=gray
+    hi LineNr cterm=none ctermbg=255 ctermfg=gray
     hi VertSplit cterm=none ctermbg=white ctermfg=black
     hi ColorColumn cterm=none ctermbg=white
     hi WildMenu cterm=none ctermfg=black ctermbg=white
@@ -417,10 +419,10 @@
     hi Operator cterm=bold ctermfg=darkgray
     hi PreProc cterm=bold ctermfg=darkgrey
     hi Function cterm=bold ctermfg=blue
-    hi Visual cterm=none ctermbg=white
+    hi Visual cterm=none ctermbg=255
     hi Comment cterm=none ctermfg=gray
     hi Constant cterm=bold ctermfg=none
-    hi Todo cterm=bold ctermfg=brown ctermbg=253
+    hi Todo cterm=bold ctermfg=brown ctermbg=255
     hi Type cterm=bold ctermfg=none
     hi Special cterm=bold ctermfg=none
     hi Underlined cterm=none ctermfg=none
@@ -434,21 +436,21 @@
     hi ModeMsg cterm=bold ctermfg=black
 
     " Cursor
-        hi CursorLine cterm=none ctermbg=253 ctermfg=none
-        hi CursorLineNr cterm=bold ctermbg=253 ctermfg=none
-        hi CursorColumn cterm=none ctermbg=253 ctermfg=none
+        hi CursorLine cterm=none ctermbg=255 ctermfg=none
+        hi CursorLineNr cterm=bold ctermbg=255 ctermfg=none
+        hi CursorColumn cterm=none ctermbg=255 ctermfg=none
 
     " TabLine
-        hi TabLine cterm=none ctermfg=blue
-        hi TabLineFill cterm=none ctermbg=lightgray ctermfg=black
+        " hi TabLine cterm=none ctermbg=15 ctermfg=blue
+        hi TabLineFill cterm=none ctermbg=15 ctermfg=black
 
     " StatusLine
         hi StatusLine cterm=bold ctermbg=white ctermfg=black
         hi StatusLineNC cterm=reverse
 
     " Fold
-        hi Folded cterm=bold ctermbg=white ctermfg=darkgray
-        hi FoldColumn cterm=none ctermfg=darkgray ctermbg=white
+        hi Folded cterm=bold ctermbg=255 ctermfg=darkgray
+        hi FoldColumn cterm=none ctermfg=darkgray ctermbg=255
 
     " Pmenu
         hi Pmenu cterm=none ctermfg=black ctermbg=white
@@ -462,7 +464,7 @@
         hi DiffText cterm=bold ctermfg=none ctermbg=226
 
     " Signify
-        hi SignColumn cterm=none ctermbg=253 ctermfg=0
+        hi SignColumn cterm=none ctermbg=255 ctermfg=0
         hi SignifyLineAdd cterm=none ctermbg=253 ctermfg=0
         hi SignifyLineChange cterm=none ctermbg=253 ctermfg=0
         hi SignifyLineDelete cterm=none ctermbg=253 ctermfg=0
@@ -475,15 +477,14 @@
         hi SignifySignDeleteFirstLine cterm=none ctermbg=253 ctermfg=0
 
     " User
-        hi User0 ctermfg=black ctermbg=gray cterm=bold
-        hi User1 ctermfg=white ctermbg=8 cterm=bold
-        hi User2 ctermfg=white ctermbg=darkgray cterm=bold
-        hi User3 ctermfg=black ctermbg=gray cterm=bold
-        hi User4 ctermfg=black ctermbg=lightgray cterm=bold
-        hi User5 ctermfg=black ctermbg=white cterm=none
-        hi User7 ctermfg=gray ctermbg=white cterm=bold
-        hi User8 ctermfg=blue ctermbg=white cterm=bold
-        hi User9 ctermfg=magenta ctermbg=white cterm=bold
+        hi User1 ctermfg=darkgray ctermbg=255 cterm=bold
+        hi User2 ctermfg=darkgray ctermbg=250 cterm=none
+        hi User3 ctermfg=white ctermbg=245 cterm=none
+        hi User4 ctermfg=white ctermbg=240 cterm=none
+        hi User5 ctermfg=white ctermbg=235 cterm=none
+        hi User7 ctermfg=gray ctermbg=white cterm=none
+        hi User8 ctermfg=blue ctermbg=white cterm=none
+        hi User9 ctermfg=magenta ctermbg=white cterm=none
 
     " Vim
         hi vimHiAttrib cterm=bold ctermfg=cyan ctermbg=none
