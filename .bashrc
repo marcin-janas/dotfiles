@@ -134,6 +134,7 @@ alias go='g checkout'
 alias gs='g status'
 alias gl='g plog'
 alias gpfm='g push-for-master'
+alias gsno='g show --name-only'
 
 # cd alias
 alias ..='cd ..'
