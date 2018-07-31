@@ -147,16 +147,20 @@
     set tabline=\ %n\/%{len(filter(range(1,bufnr('$')),'buflisted(v:val)'))}\ %{expand('%:p:h')}
     if has("statusline")
         set statusline=
-        set statusline+=%1*\ \ %f\ %m\ \                         "FileName
-        set statusline+=%2*\ %y\                               "FileType
-        set statusline+=%3*\ %{''.(&fenc!=''?&fenc:&enc).''}\  "Encoding
-        set statusline+=%3*\ %{(&bomb?\",BOM\":\"\")}\         "BOM
-        set statusline+=%4*\ %{&ff}\                           "FileFormat (dos/unix..)
-        set statusline+=%5*\ %{&spelllang}\                    "Spellanguage
-        set statusline+=%1*%=%2*\ %c\                             "Colnr
-        set statusline+=%3*\ %l/%L\                            "Rownumber/total
-        set statusline+=%4*%=\ %p%%\                  "Rownumber/total (%)
-        set statusline+=%5*\ %P\                            "Modified? Readonly? Top/bot.
+        set statusline+=%1*\ \ %r\ %M\ %t\ 
+        if @% != ""
+            set statusline+=%2*\ %Y\ 
+        endif
+        set statusline+=%3*\ %{''.(&fenc!=''?&fenc:&enc).''}\ 
+        if &bomb != ""
+            set statusline+=%3*\ %{(&bomb?\",BOM\":\"\")}\ 
+        endif
+        set statusline+=%4*\ %{&ff}\ 
+        set statusline+=%5*\ %{&spelllang}\ 
+        set statusline+=%1*%=%2*\ %c\ 
+        set statusline+=%3*\ %l/%L\ 
+        set statusline+=%4*%=\ %p%%\ 
+        set statusline+=%5*\ %P\ 
     endif
 
 " mapping function keys
