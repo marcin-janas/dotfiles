@@ -148,6 +148,7 @@
     if has("statusline")
         set statusline=
         set statusline+=%1*\ \ %r\ %M\ %t\ 
+        set statusline+=%h%w\ 
         if @% != ""
             set statusline+=%2*\ %Y\ 
         endif
@@ -157,10 +158,13 @@
         endif
         set statusline+=%4*\ %{&ff}\ 
         set statusline+=%5*\ %{&spelllang}\ 
-        set statusline+=%1*%=%2*\ %c\ 
+        set statusline+=%6*\ %{synIDattr(synID(line('.'),col('.'),1),'name')}\ 
+        set statusline+=%1*%=\ 
+        set statusline+=%2*\ %c\ 
         set statusline+=%3*\ %l/%L\ 
-        set statusline+=%4*%=\ %p%%\ 
+        set statusline+=%4*\ %p%%\ 
         set statusline+=%5*\ %P\ 
+        set statusline+=%1*\ Git:%{FugitiveHead()}\ 
     endif
 
 " mapping function keys
@@ -404,6 +408,9 @@
     " call matchadd('ColorColumn', '\%81v', 100)
     call matchadd('DiffDelete', '\%81v', 100)
 
+    " identify and show the syntax highlighting group used at the cursor
+    nnoremap <silent><leader><leader> :let name_of_syntax_item_under_cursor=synIDattr(synIDtrans(synID(line("."), col("."), 1)), "name")<cr>:execute "hi " name_of_syntax_item_under_cursor<cr>
+
     " Syntax
         syntax on
         syntax enable
@@ -435,7 +442,7 @@
     hi Number cterm=bold ctermfg=red
     hi Keyword cterm=bold ctermfg=none
     hi Statement cterm=bold ctermfg=none
-    hi Search cterm=none ctermbg=white
+    hi Search cterm=none ctermbg=254
     hi MatchParen cterm=none ctermfg=lightgray ctermbg=darkgray
     hi ModeMsg cterm=bold ctermfg=black
 
@@ -486,6 +493,7 @@
         hi User3 ctermfg=white ctermbg=245 cterm=none
         hi User4 ctermfg=white ctermbg=240 cterm=none
         hi User5 ctermfg=white ctermbg=235 cterm=none
+        hi User6 ctermfg=244 ctermbg=7 cterm=none
         hi User7 ctermfg=gray ctermbg=white cterm=none
         hi User8 ctermfg=blue ctermbg=white cterm=none
         hi User9 ctermfg=magenta ctermbg=white cterm=none
