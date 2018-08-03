@@ -143,29 +143,32 @@
         nmap <leader>n :bn<cr>
         nmap <leader>d :bd<cr>
 
-" tabline & statusline
-    set tabline=\ %n\/%{len(filter(range(1,bufnr('$')),'buflisted(v:val)'))}\ %{expand('%:p:h')}
-    if has("statusline")
-        set statusline=
-        set statusline+=%1*\ \ %r\ %M\ %t\ 
-        set statusline+=%h%w\ 
-        if @% != ""
-            set statusline+=%2*\ %Y\ 
-        endif
-        set statusline+=%3*\ %{''.(&fenc!=''?&fenc:&enc).''}\ 
-        if &bomb != ""
-            set statusline+=%3*\ %{(&bomb?\",BOM\":\"\")}\ 
-        endif
-        set statusline+=%4*\ %{&ff}\ 
-        set statusline+=%5*\ %{&spelllang}\ 
-        set statusline+=%6*\ %{synIDattr(synID(line('.'),col('.'),1),'name')}\ 
-        set statusline+=%1*%=\ 
-        set statusline+=%2*\ %c\ 
-        set statusline+=%3*\ %l/%L\ 
-        set statusline+=%4*\ %p%%\ 
-        set statusline+=%5*\ %P\ 
-        set statusline+=%1*\ Git:%{FugitiveHead()}\ 
+" tabline
+    set tabline=
+    set tabline+=%=\ 
+    set tabline+=%3*\ Git:\%{strlen(FugitiveHead())?FugitiveHead():'none'}\ 
+    set tabline+=%1*\ %{expand('%:p:h')}\ 
+
+" statusline
+    set statusline=
+    set statusline=%1*\ %n\/%{len(filter(range(1,bufnr('$')),'buflisted(v:val)'))}\ 
+    set statusline+=%r\ %M\ %t\ 
+    set statusline+=%h%w\ 
+    if !empty(@%)
+        set statusline+=%2*\ %Y\ 
     endif
+    set statusline+=%3*\ %{''.(&fenc!=''?&fenc:&enc).''}\ 
+    if !empty(&bomb)
+        set statusline+=%3*\ %{(&bomb?\",BOM\":\"\")}\ 
+    endif
+    set statusline+=%4*\ %{&ff}\ 
+    set statusline+=%5*\ %{&spelllang}\ 
+    set statusline+=%6*\ %{synIDattr(synID(line('.'),col('.'),1),'name')}\ 
+    set statusline+=%1*%=\ 
+    set statusline+=%2*\ %c\ 
+    set statusline+=%3*\ %l/%L\ 
+    set statusline+=%4*\ %p%%\ 
+    set statusline+=%5*\ %P\ 
 
 " mapping function keys
     " F2 - toggle copy mode
@@ -452,8 +455,9 @@
         hi CursorColumn cterm=none ctermbg=255 ctermfg=none
 
     " TabLine
-        " hi TabLine cterm=none ctermbg=15 ctermfg=blue
-        hi TabLineFill cterm=none ctermbg=15 ctermfg=black
+        hi TabLine cterm=bold ctermbg=15 ctermfg=0
+        hi TabLineSel cterm=bold ctermbg=15 ctermfg=0
+        hi TabLineFill cterm=none ctermbg=15 ctermfg=0
 
     " StatusLine
         hi StatusLine cterm=bold ctermbg=white ctermfg=black
@@ -520,6 +524,7 @@
         hi perlConditional cterm=bold
 
     " Links
+        hi link User0 Normal
         hi link Character String
         hi link Boolean Number
         hi link Float Number
