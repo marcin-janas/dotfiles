@@ -11,6 +11,7 @@
     set nowrap
     set title
     set magic
+    set binary
     set lazyredraw
     set modelines=0
     set textwidth=119
@@ -126,7 +127,7 @@
         nnoremap j gj
         nnoremap k gk
 
-" show whitespace
+" show 15space
     set list
     set listchars=tab:»·,trail:·,extends:>,precedes:< " without EOL
     " set listchars=eol:¶,tab:»·,trail:·,extends:>,precedes:< " with EOL
@@ -145,9 +146,11 @@
 
 " tabline
     set tabline=
-    set tabline+=%=\ 
-    set tabline+=%3*\ Git:\%{strlen(FugitiveHead())?FugitiveHead():'none'}\ 
     set tabline+=%1*\ %{expand('%:p:h')}\ 
+    set tabline+=%4*\ git:\%{strlen(FugitiveHead())?FugitiveHead():'none'}\ 
+    set tabline+=%5*\ venv:%{systemlist('[[\ -n\ $VIRTUAL_ENV\ ]]\ \&\&\ basename\ $VIRTUAL_ENV\ \|\|\ echo\ none')[0]}\ 
+    set tabline+=%1*\ 
+    set tabline+=%=\ 
 
 " statusline
     set statusline=
@@ -155,14 +158,14 @@
     set statusline+=%r\ %M\ %t\ 
     set statusline+=%h%w\ 
     if !empty(@%)
-        set statusline+=%2*\ %Y\ 
+        set statusline+=%5*\ %Y\ 
     endif
-    set statusline+=%3*\ %{''.(&fenc!=''?&fenc:&enc).''}\ 
+    set statusline+=%4*\ %{''.(&fenc!=''?&fenc:&enc).''}\ 
     if !empty(&bomb)
-        set statusline+=%3*\ %{(&bomb?\",BOM\":\"\")}\ 
+        set statusline+=%4*\ %{(&bomb?\",BOM\":\"\")}\ 
     endif
-    set statusline+=%4*\ %{&ff}\ 
-    set statusline+=%5*\ %{&spelllang}\ 
+    set statusline+=%3*\ %{&ff}\ 
+    set statusline+=%2*\ %{&spelllang}\ 
     set statusline+=%6*\ %{synIDattr(synID(line('.'),col('.'),1),'name')}\ 
     set statusline+=%1*%=\ 
     set statusline+=%2*\ %c\ 
@@ -177,7 +180,7 @@
     " F3 - toggle folding
         nnoremap <F3> :set foldenable!<cr>
 
-    " F4 - toggle whitespace
+    " F4 - toggle 15space
         nnoremap <F4> :set nolist!<cr>
 
     " F5 - toggle cursorcolumn
@@ -186,7 +189,7 @@
     " F6 - s/\t/    /g - Tab to Space
         nnoremap <F6> :retab <cr> :wq! <cr>
 
-    " F7 - remove whitespace
+    " F7 - remove 15space
         nnoremap <F7> :%s/\s\+$//<cr>
 
     " F8 - better copy & past
@@ -257,7 +260,7 @@
     set viminfo='10,\"100,:20,%,n~/.viminfo
     au BufReadPost * if line("'\"") > 0|if line("'\"") <=line("$")|exe("norm '\"")|else|exe "norm $"|endif|endif
 
-" before save remove whitespace
+" before save remove 15space
     " autocmd BufWritePre * :%s/\s\+$//e
 
 " use semicolon ;) as colon :)
@@ -419,21 +422,21 @@
         syntax enable
         syntax reset
 
-    hi Normal cterm=none ctermbg=15 ctermfg=243
+    hi Normal cterm=none ctermbg=255 ctermfg=243
     hi NonText cterm=none ctermfg=darkred
     hi LineNr cterm=none ctermbg=255 ctermfg=gray
-    hi VertSplit cterm=none ctermbg=white ctermfg=black
-    hi ColorColumn cterm=none ctermbg=white
-    hi WildMenu cterm=none ctermfg=black ctermbg=white
-    hi Error cterm=none ctermfg=black ctermbg=224
-    hi ErrorMsg cterm=none ctermfg=white ctermbg=darkred
-    hi WarningMsg cterm=none ctermfg=white ctermbg=darkred
-    hi ModeMsg cterm=none ctermfg=white
-    hi Identifier cterm=none ctermfg=darkgray
-    hi Operator cterm=bold ctermfg=darkgray
+    hi VertSplit cterm=none ctermbg=15 ctermfg=0
+    hi ColorColumn cterm=none ctermbg=15
+    hi WildMenu cterm=none ctermfg=0 ctermbg=15
+    hi Error cterm=none ctermfg=0 ctermbg=224
+    hi ErrorMsg cterm=none ctermfg=15 ctermbg=darkred
+    hi WarningMsg cterm=none ctermfg=15 ctermbg=darkred
+    hi ModeMsg cterm=none ctermfg=15
+    hi Identifier cterm=none ctermfg=240
+    hi Operator cterm=bold ctermfg=240
     hi PreProc cterm=bold ctermfg=darkgrey
     hi Function cterm=bold ctermfg=blue
-    hi Visual cterm=none ctermbg=255
+    hi Visual cterm=none ctermbg=254
     hi Comment cterm=none ctermfg=gray
     hi Constant cterm=bold ctermfg=none
     hi Todo cterm=bold ctermfg=brown ctermbg=255
@@ -445,14 +448,14 @@
     hi Number cterm=bold ctermfg=red
     hi Keyword cterm=bold ctermfg=none
     hi Statement cterm=bold ctermfg=none
-    hi Search cterm=none ctermbg=254
-    hi MatchParen cterm=none ctermfg=lightgray ctermbg=darkgray
-    hi ModeMsg cterm=bold ctermfg=black
+    hi Search cterm=none ctermbg=253
+    hi MatchParen cterm=none ctermfg=lightgray ctermbg=240
+    hi ModeMsg cterm=bold ctermfg=0
 
     " Cursor
-        hi CursorLine cterm=none ctermbg=255 ctermfg=none
-        hi CursorLineNr cterm=bold ctermbg=255 ctermfg=none
-        hi CursorColumn cterm=none ctermbg=255 ctermfg=none
+        hi CursorLine cterm=none ctermbg=254 ctermfg=none
+        hi CursorLineNr cterm=bold ctermbg=254 ctermfg=none
+        hi CursorColumn cterm=none ctermbg=254 ctermfg=none
 
     " TabLine
         hi TabLine cterm=bold ctermbg=15 ctermfg=0
@@ -460,17 +463,17 @@
         hi TabLineFill cterm=none ctermbg=15 ctermfg=0
 
     " StatusLine
-        hi StatusLine cterm=bold ctermbg=white ctermfg=black
+        hi StatusLine cterm=bold ctermbg=15 ctermfg=0
         hi StatusLineNC cterm=reverse
 
     " Fold
-        hi Folded cterm=bold ctermbg=255 ctermfg=darkgray
-        hi FoldColumn cterm=none ctermfg=darkgray ctermbg=255
+        hi Folded cterm=bold ctermbg=255 ctermfg=240
+        hi FoldColumn cterm=none ctermfg=240 ctermbg=255
 
     " Pmenu
-        hi Pmenu cterm=none ctermfg=black ctermbg=white
-        hi PmenuSel cterm=none ctermfg=black ctermbg=lightgray
-        hi PmenuSbar cterm=none ctermfg=black ctermbg=white
+        hi Pmenu cterm=none ctermfg=0 ctermbg=15
+        hi PmenuSel cterm=none ctermfg=0 ctermbg=lightgray
+        hi PmenuSbar cterm=none ctermfg=0 ctermbg=15
 
     " Diff
         hi DiffAdd cterm=none ctermfg=none ctermbg=121
@@ -492,15 +495,15 @@
         hi SignifySignDeleteFirstLine cterm=none ctermbg=253 ctermfg=0
 
     " User
-        hi User1 ctermfg=darkgray ctermbg=255 cterm=bold
-        hi User2 ctermfg=darkgray ctermbg=250 cterm=none
-        hi User3 ctermfg=white ctermbg=245 cterm=none
-        hi User4 ctermfg=white ctermbg=240 cterm=none
-        hi User5 ctermfg=white ctermbg=235 cterm=none
-        hi User6 ctermfg=244 ctermbg=7 cterm=none
-        hi User7 ctermfg=gray ctermbg=white cterm=none
-        hi User8 ctermfg=blue ctermbg=white cterm=none
-        hi User9 ctermfg=magenta ctermbg=white cterm=none
+        hi User1 ctermfg=240 ctermbg=255 cterm=bold
+        hi User2 ctermfg=240 ctermbg=253 cterm=bold
+        hi User3 ctermfg=242 ctermbg=251 cterm=bold
+        hi User4 ctermfg=255 ctermbg=249 cterm=bold
+        hi User5 ctermfg=255 ctermbg=245 cterm=bold
+        hi User6 ctermfg=240 ctermbg=7 cterm=none
+        hi User7 ctermfg=gray ctermbg=15 cterm=none
+        hi User8 ctermfg=blue ctermbg=15 cterm=none
+        hi User9 ctermfg=magenta ctermbg=15 cterm=none
 
     " Vim
         hi vimHiAttrib cterm=bold ctermfg=cyan ctermbg=none
@@ -510,12 +513,12 @@
         hi link vimGroupName vimGroup
 
     " Python
-        hi pythonExceptions ctermfg=black cterm=bold
+        hi pythonExceptions ctermfg=0 cterm=bold
         hi pythonDecoratorName cterm=bold ctermfg=brown
 
     " HTML
-        hi Title cterm=none ctermfg=darkgray
-        hi htmlTagName cterm=bold ctermfg=black
+        hi Title cterm=none ctermfg=240
+        hi htmlTagName cterm=bold ctermfg=0
         hi htmlTag cterm=bold ctermfg=gray
         hi htmlEndTag cterm=bold ctermfg=gray
         hi htmlArg cterm=bold  ctermfg=blue
