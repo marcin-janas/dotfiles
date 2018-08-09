@@ -423,15 +423,15 @@
         syntax reset
 
     hi Normal cterm=none ctermbg=255 ctermfg=243
-    hi NonText cterm=none ctermfg=darkred
+    hi NonText cterm=none ctermfg=243
     hi LineNr cterm=none ctermbg=255 ctermfg=gray
-    hi VertSplit cterm=none ctermbg=15 ctermfg=0
-    hi ColorColumn cterm=none ctermbg=15
-    hi WildMenu cterm=none ctermfg=0 ctermbg=15
+    hi VertSplit cterm=none ctermbg=255 ctermfg=0
+    hi ColorColumn cterm=none ctermbg=255
+    hi WildMenu cterm=bold ctermfg=0 ctermbg=255
     hi Error cterm=none ctermfg=0 ctermbg=224
-    hi ErrorMsg cterm=none ctermfg=15 ctermbg=darkred
-    hi WarningMsg cterm=none ctermfg=15 ctermbg=darkred
-    hi ModeMsg cterm=none ctermfg=15
+    hi ErrorMsg cterm=bold ctermfg=1 ctermbg=255
+    hi WarningMsg cterm=bold ctermfg=1 ctermbg=255
+    hi ModeMsg cterm=none ctermfg=243
     hi Identifier cterm=none ctermfg=240
     hi Operator cterm=bold ctermfg=240
     hi PreProc cterm=bold ctermfg=darkgrey
@@ -458,12 +458,12 @@
         hi CursorColumn cterm=none ctermbg=254 ctermfg=none
 
     " TabLine
-        hi TabLine cterm=bold ctermbg=15 ctermfg=0
-        hi TabLineSel cterm=bold ctermbg=15 ctermfg=0
-        hi TabLineFill cterm=none ctermbg=15 ctermfg=0
+        hi TabLine cterm=bold ctermbg=255 ctermfg=0
+        hi TabLineSel cterm=bold ctermbg=255 ctermfg=0
+        hi TabLineFill cterm=none ctermbg=255 ctermfg=0
 
     " StatusLine
-        hi StatusLine cterm=bold ctermbg=15 ctermfg=0
+        hi StatusLine cterm=none ctermbg=255 ctermfg=0
         hi StatusLineNC cterm=reverse
 
     " Fold
@@ -471,9 +471,10 @@
         hi FoldColumn cterm=none ctermfg=240 ctermbg=255
 
     " Pmenu
-        hi Pmenu cterm=none ctermfg=0 ctermbg=15
-        hi PmenuSel cterm=none ctermfg=0 ctermbg=lightgray
-        hi PmenuSbar cterm=none ctermfg=0 ctermbg=15
+        hi Pmenu cterm=none ctermfg=0 ctermbg=254
+        hi PmenuSel cterm=bold ctermfg=none ctermbg=254
+        hi PmenuSbar cterm=none ctermfg=0 ctermbg=253
+        hi PmenuThumb cterm=none ctermfg=15 ctermbg=245
 
     " Diff
         hi DiffAdd cterm=none ctermfg=none ctermbg=121
