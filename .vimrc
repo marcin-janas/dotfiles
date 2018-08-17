@@ -448,8 +448,8 @@
     hi Number cterm=bold ctermfg=red
     hi Keyword cterm=bold ctermfg=none
     hi Statement cterm=bold ctermfg=none
-    hi Search cterm=none ctermbg=253
-    hi MatchParen cterm=none ctermfg=lightgray ctermbg=240
+    hi Search cterm=none ctermbg=15
+    hi MatchParen cterm=none ctermfg=none ctermbg=15
     hi ModeMsg cterm=bold ctermfg=0
 
     " Cursor
@@ -516,6 +516,9 @@
     " Python
         hi pythonExceptions ctermfg=0 cterm=bold
         hi pythonDecoratorName cterm=bold ctermfg=brown
+
+    " YAML
+        hi yamlBlockMappingKey cterm=bold
 
     " HTML
         hi Title cterm=none ctermfg=240
