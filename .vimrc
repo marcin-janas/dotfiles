@@ -424,7 +424,6 @@
 
     hi Normal cterm=none ctermbg=255 ctermfg=243
     hi NonText cterm=none ctermfg=243
-    hi LineNr cterm=none ctermbg=255 ctermfg=gray
     hi VertSplit cterm=none ctermbg=255 ctermfg=0
     hi ColorColumn cterm=none ctermbg=255
     hi WildMenu cterm=bold ctermfg=0 ctermbg=255
@@ -435,27 +434,28 @@
     hi Identifier cterm=none ctermfg=240
     hi Operator cterm=bold ctermfg=240
     hi PreProc cterm=bold ctermfg=darkgrey
-    hi Function cterm=bold ctermfg=blue
+    hi Function cterm=bold ctermfg=26
     hi Visual cterm=none ctermbg=254
-    hi Comment cterm=none ctermfg=gray
+    hi Comment cterm=none ctermfg=246
     hi Constant cterm=bold ctermfg=none
     hi Todo cterm=bold ctermfg=brown ctermbg=255
     hi Type cterm=bold ctermfg=none
     hi Special cterm=bold ctermfg=none
     hi Underlined cterm=none ctermfg=none
     hi SpecialKey cterm=none ctermbg=none ctermfg=248
-    hi String cterm=bold ctermfg=cyan
-    hi Number cterm=bold ctermfg=red
+    hi String cterm=bold ctermfg=36
+    hi Number cterm=bold ctermfg=197
     hi Keyword cterm=bold ctermfg=none
     hi Statement cterm=bold ctermfg=none
     hi Search cterm=none ctermbg=15
     hi MatchParen cterm=none ctermfg=none ctermbg=15
     hi ModeMsg cterm=bold ctermfg=0
 
-    " Cursor
+    " Line & Cursor
         hi CursorLine cterm=none ctermbg=254 ctermfg=none
-        hi CursorLineNr cterm=bold ctermbg=254 ctermfg=none
         hi CursorColumn cterm=none ctermbg=254 ctermfg=none
+        hi LineNr cterm=none ctermbg=255 ctermfg=248
+        hi CursorLineNr cterm=bold ctermbg=254 ctermfg=244
 
     " TabLine
         hi TabLine cterm=bold ctermbg=255 ctermfg=0
@@ -502,13 +502,13 @@
         hi User4 ctermfg=255 ctermbg=249 cterm=bold
         hi User5 ctermfg=255 ctermbg=245 cterm=bold
         hi User6 ctermfg=240 ctermbg=7 cterm=none
-        hi User7 ctermfg=gray ctermbg=15 cterm=none
-        hi User8 ctermfg=blue ctermbg=15 cterm=none
+        hi User7 ctermfg=235 ctermbg=15 cterm=none
+        hi User8 ctermfg=26 ctermbg=15 cterm=none
         hi User9 ctermfg=magenta ctermbg=15 cterm=none
 
     " Vim
         hi vimHiAttrib cterm=bold ctermfg=cyan ctermbg=none
-        hi vimGroup cterm=bold ctermfg=blue ctermbg=none
+        hi vimGroup cterm=bold ctermfg=26 ctermbg=none
         hi link vimWarn ErrorMsg
         hi link vimHiCtermColor vimHiAttrib
         hi link vimGroupName vimGroup
@@ -525,7 +525,7 @@
         hi htmlTagName cterm=bold ctermfg=0
         hi htmlTag cterm=bold ctermfg=gray
         hi htmlEndTag cterm=bold ctermfg=gray
-        hi htmlArg cterm=bold  ctermfg=blue
+        hi htmlArg cterm=bold  ctermfg=26
 
     " Perl
         hi perlConditional cterm=bold
