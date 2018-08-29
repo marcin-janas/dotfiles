@@ -49,7 +49,7 @@
         set ignorecase
         set smartcase
     " press Enter to turn off search result highlighting
-        nmap <silent> <cr> :nohlsearch<cr> :set foldmethod=indent<cr> :set nofoldenable<cr>
+        nmap <silent> <cr> :nohlsearch<cr>:set foldmethod=indent<cr>:set nofoldenable<cr>
     " toggle_search
         augroup toggle_search
             autocmd!
@@ -135,9 +135,11 @@
 " buffer
     set hidden
     " autosave
-        autocmd BufLeave * :wa
-        autocmd TextChanged * :wa
-        autocmd InsertLeave * wa
+        if !empty(@%)
+            autocmd BufLeave * :wa
+            autocmd TextChanged * :wa
+            autocmd InsertLeave * :wa
+        endif
     " better/faster buffer management
         nmap <leader>l :ls<cr>:b
         nmap <leader>p :bp<cr>
