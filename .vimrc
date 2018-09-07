@@ -127,7 +127,7 @@
         nnoremap j gj
         nnoremap k gk
 
-" show 15space
+" show whitespace
     set list
     set listchars=tab:»·,trail:·,extends:>,precedes:< " without EOL
     " set listchars=eol:¶,tab:»·,trail:·,extends:>,precedes:< " with EOL
@@ -182,7 +182,7 @@
     " F3 - toggle folding
         nnoremap <F3> :set foldenable!<cr>
 
-    " F4 - toggle 15space
+    " F4 - toggle whitespace
         nnoremap <F4> :set nolist!<cr>
 
     " F5 - toggle cursorcolumn
@@ -191,7 +191,7 @@
     " F6 - s/\t/    /g - Tab to Space
         nnoremap <F6> :retab <cr> :wq! <cr>
 
-    " F7 - remove 15space
+    " F7 - remove whitespace
         nnoremap <F7> :%s/\s\+$//<cr>
 
     " F8 - better copy & past
@@ -227,29 +227,39 @@
 
 " automatically closing quotation mark, brackets etc.
     inoremap " ""<left>
-    inoremap "<space> "
-    inoremap "<cr> "
+    inoremap "<space> "<space>
+    inoremap "<cr> "<cr>
 
     inoremap ' ''<left>
-    inoremap '<space> '
-    inoremap '<cr> '
+    inoremap '<space> '<space>
+    inoremap '<cr> '<cr>
 
     inoremap ( ()<left>
-    inoremap (<space> (
-    inoremap (<cr> (
+    inoremap (<space> (<space>
+    inoremap (<cr> (<cr>
 
     inoremap [ []<left>
-    inoremap [<space> [
-    inoremap [<cr> [
+    inoremap [<space> [<space>
+    inoremap [<cr> [<cr>
 
     inoremap < <><left>
-    inoremap <<space> <
-    inoremap <<cr> <
+    inoremap <<space> <<space>
+    inoremap <<cr> <<cr>
 
     inoremap { {}<left>
-    inoremap {<space> {
+    inoremap {<space> {<space>
     inoremap {<cr> {<cr><cr>}<left><bs><up><tab><tab>
     inoremap {;<cr> {<cr><cr>};<left><left><bs><up><tab><tab>
+
+" custom comma motion mapping
+    nmap di, f,dT,
+    nmap ci, f,cT,
+    nmap da, f,ld2F,i,<ESC>l
+    nmap ca, f,ld2F,i,<ESC>a
+
+" custom underscore motion mapping
+    nmap di_ f_dT_
+    nmap ci_ f_cT_
 
 " quick jump to shell
     nmap <silent> <leader>s :shell<cr>
@@ -262,7 +272,7 @@
     set viminfo='10,\"100,:20,%,n~/.viminfo
     au BufReadPost * if line("'\"") > 0|if line("'\"") <=line("$")|exe("norm '\"")|else|exe "norm $"|endif|endif
 
-" before save remove 15space
+" before save remove whitespace
     " autocmd BufWritePre * :%s/\s\+$//e
 
 " use semicolon ;) as colon :)
