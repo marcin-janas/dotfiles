@@ -20,6 +20,7 @@
     set ruler
     set scrolloff=0
     set backspace=2
+    set autochdir
     let &keywordprg=':help'
 
 " change leader
@@ -131,6 +132,30 @@
     set list
     set listchars=tab:»·,trail:·,extends:>,precedes:< " without EOL
     " set listchars=eol:¶,tab:»·,trail:·,extends:>,precedes:< " with EOL
+
+" netrw
+    " let g:netrw_banner=0
+    " let g:netrw_browse_split=2
+    " let g:netrw_liststyle=3
+    " let g:netrw_altv=1
+
+    " let g:netrw_fastbrowse    = 2
+    " let g:netrw_keepdir       = 0
+    " let g:netrw_liststyle     = 2
+    " let g:netrw_retmap        = 1
+    " let g:netrw_silent        = 1
+    " let g:netrw_special_syntax= 1
+
+
+    " let g:netrw_banner = 0
+    " let g:netrw_liststyle = 3
+    " let g:netrw_browse_split = 2
+    " let g:netrw_altv = 1
+    " let g:netrw_winsize = 0
+    " augroup ProjectDrawer
+    "   autocmd!
+    "   autocmd VimEnter * :Vexplore
+    " augroup END
 
 " buffer
     set hidden
@@ -392,7 +417,7 @@
     set omnifunc=syntaxcomplete#Complete
 
 " special options for Python
-    let python_highlight_all = 1
+    let python_highlight_all=1
     au FileType python syn keyword pythonDecorator self False class finally is return None continue for lambda try True from nonlocal while and del global not with as elif if or yield assert else import pass break except in raise async await
     au BufRead,BufNewFile *.py set shiftwidth=4
     au BufRead,BufNewFile *.py set softtabstop=4
