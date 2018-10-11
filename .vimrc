@@ -21,6 +21,7 @@
     set scrolloff=0
     set backspace=2
     set autochdir
+    " set exrc " read .vimrc from the current directory
     let &keywordprg=':help'
 
 " change leader
@@ -155,7 +156,7 @@
     " augroup ProjectDrawer
     "   autocmd!
     "   autocmd VimEnter * :Vexplore
-    " augroup END
+    " augroup end
 
 " buffer
     set hidden
@@ -180,25 +181,41 @@
     set tabline+=%=\ 
 
 " statusline
-    set statusline=
-    set statusline=%1*\ %n\/%{len(filter(range(1,bufnr('$')),'buflisted(v:val)'))}\ 
-    set statusline+=%r\ %M\ %t\ 
-    set statusline+=%h%w\ 
-    if !empty(@%)
-        set statusline+=%5*\ %Y\ 
-    endif
-    set statusline+=%4*\ %{''.(&fenc!=''?&fenc:&enc).''}\ 
-    if !empty(&bomb)
-        set statusline+=%4*\ %{(&bomb?\",BOM\":\"\")}\ 
-    endif
-    set statusline+=%3*\ %{&ff}\ 
-    set statusline+=%2*\ %{&spelllang}\ 
-    set statusline+=%6*\ %{synIDattr(synID(line('.'),col('.'),1),'name')}\ 
-    set statusline+=%1*%=\ 
-    set statusline+=%2*\ %c\ 
-    set statusline+=%3*\ %l/%L\ 
-    set statusline+=%4*\ %p%%\ 
-    set statusline+=%5*\ %P\ 
+    function! ActiveStatusLine()
+        let statusline=''
+        let statusline.="%1* %n\/%{len(filter(range(1,bufnr('$')),'buflisted(v:val)'))} "
+        let statusline.="%r %M %t "
+        let statusline.="%h%w "
+        if !empty(@%)
+            let statusline.="%5* %Y "
+        endif
+        let statusline.="%4* %{''.(&fenc!=''?&fenc:&enc).''} "
+        if !empty(&bomb)
+            let statusline.="%4* %{(&bomb?\",BOM\":\"\")} "
+        endif
+        let statusline.="%3* %{&ff} "
+        let statusline.="%2* %{&spelllang} "
+        let statusline.="%6* %{synIDattr(synID(line('.'),col('.'),1),'name')} "
+        let statusline.="%1*%= "
+        let statusline.="%2* %c "
+        let statusline.="%3* %l/%L "
+        let statusline.="%4* %p%% "
+        let statusline.="%5* %P "
+        return statusline
+    endfunction
+
+    function! InactiveStatusLine()
+        let statusline=''
+        let statusline.="%r %M %t "
+        return statusline
+    endfunction
+
+    augroup status_line
+        set statusline=%!ActiveStatusLine()
+        autocmd!
+        autocmd WinEnter * setlocal statusline=%!ActiveStatusLine()
+        autocmd WinLeave * setlocal statusline=%!InactiveStatusLine()
+    augroup end
 
 " mapping function keys
     " F2 - toggle copy mode
@@ -501,7 +518,7 @@
 
     " StatusLine
         hi StatusLine cterm=none ctermbg=255 ctermfg=0
-        hi StatusLineNC cterm=reverse
+        hi StatusLineNC cterm=none
 
     " Fold
         hi Folded cterm=bold ctermbg=255 ctermfg=240
