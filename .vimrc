@@ -183,7 +183,8 @@
 " statusline
     function! ActiveStatusLine()
         let statusline=''
-        let statusline.="%1* %n\/%{len(filter(range(1,bufnr('$')),'buflisted(v:val)'))} "
+        let statusline.="%1* [%{mode()}] "
+        let statusline.="%n\/%{len(filter(range(1,bufnr('$')),'buflisted(v:val)'))} "
         let statusline.="%r %M %t "
         let statusline.="%h%w "
         if !empty(@%)
@@ -471,7 +472,7 @@
     " identify and show the syntax highlighting group used at the cursor
     nnoremap <silent><leader><leader> :let name_of_syntax_item_under_cursor=synIDattr(synIDtrans(synID(line("."), col("."), 1)), "name")<cr>:execute "hi " name_of_syntax_item_under_cursor<cr>
 
-    " Syntax
+    " syntax
         syntax on
         syntax enable
         syntax reset
@@ -493,7 +494,7 @@
     hi Comment cterm=none ctermfg=246
     hi Constant cterm=bold ctermfg=none
     hi Todo cterm=bold ctermfg=brown ctermbg=255
-    hi Type cterm=bold ctermfg=none
+    hi Type cterm=none ctermfg=none
     hi Special cterm=bold ctermfg=none
     hi Underlined cterm=none ctermfg=none
     hi SpecialKey cterm=none ctermbg=none ctermfg=248
@@ -505,38 +506,38 @@
     hi MatchParen cterm=none ctermfg=none ctermbg=15
     hi ModeMsg cterm=bold ctermfg=0
 
-    " Line & Cursor
+    " line & cursor
         hi CursorLine cterm=none ctermbg=254 ctermfg=none
         hi CursorColumn cterm=none ctermbg=254 ctermfg=none
         hi LineNr cterm=none ctermbg=255 ctermfg=248
         hi CursorLineNr cterm=bold ctermbg=254 ctermfg=244
 
-    " TabLine
+    " tabline
         hi TabLine cterm=bold ctermbg=255 ctermfg=0
         hi TabLineSel cterm=bold ctermbg=255 ctermfg=0
         hi TabLineFill cterm=none ctermbg=255 ctermfg=0
 
-    " StatusLine
+    " statusline
         hi StatusLine cterm=none ctermbg=255 ctermfg=0
         hi StatusLineNC cterm=none
 
-    " Fold
+    " fold
         hi Folded cterm=bold ctermbg=255 ctermfg=240
         hi FoldColumn cterm=none ctermfg=240 ctermbg=255
 
-    " Pmenu
+    " pmenu
         hi Pmenu cterm=none ctermfg=0 ctermbg=254
         hi PmenuSel cterm=bold ctermfg=none ctermbg=254
         hi PmenuSbar cterm=none ctermfg=0 ctermbg=253
         hi PmenuThumb cterm=none ctermfg=15 ctermbg=245
 
-    " Diff
+    " diff
         hi DiffAdd cterm=none ctermfg=none ctermbg=121
         hi DiffChange cterm=none ctermbg=229 ctermfg=none
         hi DiffDelete cterm=none ctermfg=none ctermbg=224
         hi DiffText cterm=bold ctermfg=none ctermbg=226
 
-    " Signify
+    " signify
         hi SignColumn cterm=none ctermbg=255 ctermfg=0
         hi SignifyLineAdd cterm=none ctermbg=253 ctermfg=0
         hi SignifyLineChange cterm=none ctermbg=253 ctermfg=0
@@ -549,7 +550,7 @@
         hi SignifySignChangeDelete cterm=none ctermbg=253 ctermfg=0
         hi SignifySignDeleteFirstLine cterm=none ctermbg=253 ctermfg=0
 
-    " User
+    " user
         hi User1 ctermfg=240 ctermbg=255 cterm=bold
         hi User2 ctermfg=240 ctermbg=253 cterm=bold
         hi User3 ctermfg=242 ctermbg=251 cterm=bold
@@ -560,31 +561,35 @@
         hi User8 ctermfg=26 ctermbg=15 cterm=none
         hi User9 ctermfg=magenta ctermbg=15 cterm=none
 
-    " Vim
+    " vim
         hi vimHiAttrib cterm=bold ctermfg=cyan ctermbg=none
         hi vimGroup cterm=bold ctermfg=26 ctermbg=none
         hi link vimWarn ErrorMsg
         hi link vimHiCtermColor vimHiAttrib
         hi link vimGroupName vimGroup
 
-    " Python
+    " python
         hi pythonExceptions ctermfg=0 cterm=bold
         hi pythonDecoratorName cterm=bold ctermfg=brown
 
-    " YAML
+    " sh
+        hi shVariable ctermfg=240 cterm=bold
+        hi shDerefSimple ctermfg=240 cterm=bold
+
+    " yaml
         hi yamlBlockMappingKey cterm=bold
 
-    " HTML
+    " html
         hi Title cterm=none ctermfg=240
-        hi htmlTagName cterm=bold ctermfg=0
+        hi htmlTagName cterm=bold ctermfg=242
         hi htmlTag cterm=bold ctermfg=gray
         hi htmlEndTag cterm=bold ctermfg=gray
         hi htmlArg cterm=bold  ctermfg=26
 
-    " Perl
+    " perl
         hi perlConditional cterm=bold
 
-    " Links
+    " link
         hi link User0 Normal
         hi link Character String
         hi link Boolean Number
@@ -605,4 +610,6 @@
         hi link SpecialChar Special
         hi link SpecialComment Comment
         hi link WarningMsg ErrorMsg
+        hi link kshSpecialVariables shVariable
+        hi link cssColor cssUnitDecorators
 " colorscheme$
