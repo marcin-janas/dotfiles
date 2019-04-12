@@ -183,9 +183,9 @@
 " statusline
     function! ActiveStatusLine()
         let statusline=''
-        let statusline.="%1* [%{mode()}] "
-        let statusline.="%n\/%{len(filter(range(1,bufnr('$')),'buflisted(v:val)'))} "
-        let statusline.="%r %M %t "
+        let statusline.="%5* %{toupper(mode())} "
+        let statusline.="%6* %r %M %t "
+        let statusline.="%6* %n\/%{len(filter(range(1,bufnr('$')),'buflisted(v:val)'))} "
         let statusline.="%h%w "
         if !empty(@%)
             let statusline.="%5* %Y "
@@ -461,6 +461,11 @@
     au BufRead,BufNewFile *.{pl,pm} set softtabstop=4
     au BufRead,BufNewFile *.{pl,pm} set noexpandtab
 
+" special options for Ruby
+    au BufRead,BufNewFile *.{rb,rake} set shiftwidth=2
+    au BufRead,BufNewFile *.{rb,rake} set softtabstop=2
+    au BufRead,BufNewFile *.{rb,rake} set expandtab
+
 " ^colorscheme
     hi clear
     set background=light
@@ -481,40 +486,41 @@
     hi NonText cterm=none ctermfg=243
     hi VertSplit cterm=none ctermbg=255 ctermfg=0
     hi ColorColumn cterm=none ctermbg=255
-    hi WildMenu cterm=bold ctermfg=0 ctermbg=255
+    hi WildMenu cterm=none ctermfg=0 ctermbg=15
     hi Error cterm=none ctermfg=0 ctermbg=224
-    hi ErrorMsg cterm=bold ctermfg=1 ctermbg=255
-    hi WarningMsg cterm=bold ctermfg=1 ctermbg=255
+    hi ErrorMsg cterm=none ctermfg=1 ctermbg=255
+    hi WarningMsg cterm=none ctermfg=1 ctermbg=255
     hi ModeMsg cterm=none ctermfg=243
     hi Identifier cterm=none ctermfg=240
-    hi Operator cterm=bold ctermfg=240
-    hi PreProc cterm=bold ctermfg=darkgrey
-    hi Function cterm=bold ctermfg=26
+    hi Operator cterm=none ctermfg=240
+    hi PreProc cterm=none ctermfg=26
+    hi Function cterm=none ctermfg=209
     hi Visual cterm=none ctermbg=254
     hi Comment cterm=none ctermfg=246
-    hi Constant cterm=bold ctermfg=none
-    hi Todo cterm=bold ctermfg=brown ctermbg=255
-    hi Type cterm=none ctermfg=none
-    hi Special cterm=bold ctermfg=none
+    hi Constant cterm=none ctermfg=none
+    hi Todo cterm=none ctermfg=brown ctermbg=255
+    hi Type cterm=none ctermfg=99
+    hi Special cterm=none ctermfg=none
     hi Underlined cterm=none ctermfg=none
     hi SpecialKey cterm=none ctermbg=none ctermfg=248
-    hi String cterm=bold ctermfg=36
-    hi Number cterm=bold ctermfg=197
-    hi Keyword cterm=bold ctermfg=none
-    hi Statement cterm=bold ctermfg=none
+    hi String cterm=none ctermfg=36
+    hi Number cterm=none ctermfg=197
+    hi Keyword cterm=none ctermfg=26
+    hi Statement cterm=none ctermfg=26
+    " hi link Statement Keyword
     hi Search cterm=none ctermbg=15
     hi MatchParen cterm=none ctermfg=none ctermbg=15
-    hi ModeMsg cterm=bold ctermfg=0
+    hi ModeMsg cterm=none ctermfg=0
 
     " line & cursor
         hi CursorLine cterm=none ctermbg=254 ctermfg=none
         hi CursorColumn cterm=none ctermbg=254 ctermfg=none
         hi LineNr cterm=none ctermbg=255 ctermfg=248
-        hi CursorLineNr cterm=bold ctermbg=254 ctermfg=244
+        hi CursorLineNr cterm=none ctermbg=254 ctermfg=none
 
     " tabline
-        hi TabLine cterm=bold ctermbg=255 ctermfg=0
-        hi TabLineSel cterm=bold ctermbg=255 ctermfg=0
+        hi TabLine cterm=none ctermbg=255 ctermfg=0
+        hi TabLineSel cterm=none ctermbg=255 ctermfg=0
         hi TabLineFill cterm=none ctermbg=255 ctermfg=0
 
     " statusline
@@ -522,12 +528,12 @@
         hi StatusLineNC cterm=none
 
     " fold
-        hi Folded cterm=bold ctermbg=255 ctermfg=240
+        hi Folded cterm=none ctermbg=254 ctermfg=244
         hi FoldColumn cterm=none ctermfg=240 ctermbg=255
 
     " pmenu
         hi Pmenu cterm=none ctermfg=0 ctermbg=254
-        hi PmenuSel cterm=bold ctermfg=none ctermbg=254
+        hi PmenuSel cterm=none ctermfg=none ctermbg=15
         hi PmenuSbar cterm=none ctermfg=0 ctermbg=253
         hi PmenuThumb cterm=none ctermfg=15 ctermbg=245
 
@@ -535,7 +541,7 @@
         hi DiffAdd cterm=none ctermfg=none ctermbg=121
         hi DiffChange cterm=none ctermbg=229 ctermfg=none
         hi DiffDelete cterm=none ctermfg=none ctermbg=224
-        hi DiffText cterm=bold ctermfg=none ctermbg=226
+        hi DiffText cterm=none ctermfg=none ctermbg=226
 
     " signify
         hi SignColumn cterm=none ctermbg=255 ctermfg=0
@@ -551,43 +557,41 @@
         hi SignifySignDeleteFirstLine cterm=none ctermbg=253 ctermfg=0
 
     " user
-        hi User1 ctermfg=240 ctermbg=255 cterm=bold
-        hi User2 ctermfg=240 ctermbg=253 cterm=bold
-        hi User3 ctermfg=242 ctermbg=251 cterm=bold
-        hi User4 ctermfg=255 ctermbg=249 cterm=bold
-        hi User5 ctermfg=255 ctermbg=245 cterm=bold
+        hi User1 ctermfg=240 ctermbg=255 cterm=none
+        hi User2 ctermfg=240 ctermbg=253 cterm=none
+        hi User3 ctermfg=242 ctermbg=251 cterm=none
+        hi User4 ctermfg=255 ctermbg=249 cterm=none
+        hi User5 ctermfg=255 ctermbg=245 cterm=none
         hi User6 ctermfg=240 ctermbg=7 cterm=none
         hi User7 ctermfg=235 ctermbg=15 cterm=none
         hi User8 ctermfg=26 ctermbg=15 cterm=none
         hi User9 ctermfg=magenta ctermbg=15 cterm=none
 
     " vim
-        hi vimHiAttrib cterm=bold ctermfg=cyan ctermbg=none
-        hi vimGroup cterm=bold ctermfg=26 ctermbg=none
+        hi vimHiAttrib cterm=none ctermfg=cyan ctermbg=none
+        hi vimGroup cterm=none ctermfg=0 ctermbg=none
         hi link vimWarn ErrorMsg
         hi link vimHiCtermColor vimHiAttrib
         hi link vimGroupName vimGroup
 
     " python
-        hi pythonExceptions ctermfg=0 cterm=bold
-        hi pythonDecoratorName cterm=bold ctermfg=brown
+        hi pythonExceptions ctermfg=0 cterm=none
+        hi pythonDecoratorName cterm=none ctermfg=brown
 
     " sh
-        hi shVariable ctermfg=240 cterm=bold
-        hi shDerefSimple ctermfg=240 cterm=bold
+        hi shVariable ctermfg=240 cterm=none
+        hi shDerefSimple ctermfg=240 cterm=none
 
     " yaml
-        hi yamlBlockMappingKey cterm=bold
-
-    " html
+        hi yamlBlockMappingKey cterm=none
         hi Title cterm=none ctermfg=240
-        hi htmlTagName cterm=bold ctermfg=242
-        hi htmlTag cterm=bold ctermfg=gray
-        hi htmlEndTag cterm=bold ctermfg=gray
-        hi htmlArg cterm=bold  ctermfg=26
+        hi htmlTagName cterm=none ctermfg=242
+        hi htmlTag cterm=none ctermfg=gray
+        hi htmlEndTag cterm=none ctermfg=gray
+        hi htmlArg cterm=none  ctermfg=26
 
     " perl
-        hi perlConditional cterm=bold
+        hi perlConditional cterm=none
 
     " link
         hi link User0 Normal
