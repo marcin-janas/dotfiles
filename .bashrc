@@ -1,3 +1,7 @@
+source ~/bin/terminal_color.sh
+source ~/bin/ah.sh
+source <(kubectl completion bash)
+
 # set
 set -o noclobber
 set -o notify
@@ -14,22 +18,22 @@ shopt -s cmdhist
 shopt -s extglob
 
 # export
-export PROMPT_COMMAND='history -a'
 export HISTCONTROL=ignoreboth
 export HISTSIZE=100000
 export HISTTIMEFORMAT="%Y-%m-%d_%H:%M:%S_%a  "
 export HISTIGNORE="&:bg:fg:ll:h"
 export IGNOREEOF=1 # ctrl+d must pressed twice to exit Bash
+export PATH=$PATH:~/bin
 
 # function
 export_ps1() {
-    BLUE="\[\033[01;34m\]";
+    BLUE="\033[01;34m";
     CYAN="\[\033[1;36m\]";
     GREEN="\[\033[1;32m\]";
-    CLEAR="\[\033[00m\]";
+    CLEAR="\033[00m";
     VENV=$(basename $VIRTUAL_ENV 2>/dev/null)
-    [ -z "$VENV" ] && export PS1="$GREEN\u$CLEAR@$CYAN\h$CLEAR:$BLUE\w$CLEAR$(__git_ps1)$CLEAR # " \
-        || export PS1="($VENV) $GREEN\u$CLEAR@$CYAN\h$CLEAR:$BLUE\w$CLEAR$(__git_ps1)$CLEAR # "
+    echo -e $VENV $BLUE$PWD$CLEAR $(__git_ps1)
+    PS1=" "
 }
 
 vim_init_plugins() {
@@ -97,7 +101,7 @@ vim_remove_plugin() {
 }
 
 # prompt
-GIT_PROMPT_FILE=$(ls /usr/lib/git-core/git-sh-prompt /usr/share/git/completion/git-prompt.sh 2>/dev/null|head -n1)
+GIT_PROMPT_FILE=$(ls /usr/lib/git-core/git-sh-prompt /usr/share/git/completion/git-prompt.sh /usr/local/Cellar/git/2.19.1/etc/bash_completion.d/git-prompt.sh 2>/dev/null|head -n1)
 if [ -f $GIT_PROMPT_FILE ]; then
     GIT_PS1_SHOWDIRTYSTATE=true
     GIT_PS1_SHOWSTASHSTATE=true
@@ -106,12 +110,13 @@ if [ -f $GIT_PROMPT_FILE ]; then
     GIT_PS1_HIDE_IF_PWD_IGNORED=true
     GIT_PS1_SHOWCOLORHINTS=true
     source $GIT_PROMPT_FILE
-    export PROMPT_COMMAND='history -a; export_ps1'
+    export PROMPT_COMMAND='history -n; history -a; export_ps1'
 fi
+export PROMPT_COMMAND='history -n; history -a; export_ps1'
 
 # ls alias
-alias ls='ls --color'
-alias l='ls -FG'
+alias l='ls -FGla'
+alias ls='ls -FG'
 alias ll='ls -al'                              # long list format
 alias lk='ls -lk'                              # --block-size=1K
 alias lt='ls -ltr'                             # sort by date (mtime)
@@ -123,25 +128,57 @@ alias ld='ls -d */'                            # ls only Dirs
 alias l.='ls -dAFh .[^.]*'                     # ls only Dotfiles
 alias lst='ls -hFtal | grep $(date +%Y-%m-%d)' # ls Today
 
-# git alias
+# git
+git-checkout() {
+  if [[ "$1" != "" ]]
+  then
+    git checkout $@
+  else
+    git checkout $(git branch|fzf)
+  fi
+}
+
+git-reset() {
+  git reset --$1 HEAD~$2
+}
+
 alias g='git'
 alias ga='g add'
 alias gb='g branch'
 alias gc='g commit -s -m'
+alias gco=git-checkout
+alias gcom='g checkout master'
 alias gd='g diff'
 alias gdh='g diff HEAD'
-alias gco='g checkout'
-alias gs='g status'
-alias gl='g plog'
+alias gl='g log --color --graph --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset" --abbrev-commit'
+alias glf='g log --follow --'
+alias gp='git pull'
 alias gpfm='g push-for-master'
+alias gpusho='g push origin $(git rev-parse --abbrev-ref HEAD)'
+alias grsoft='git-reset soft'
+alias gs='g status'
+alias gsh='g show'
 alias gsno='g show --name-only'
+
+# kubectl alias
+alias kdp='kubectl delete pod'
+alias kgp='kubectl get pods'
+alias klg='kubectl logs -f'
+
+function ksh() {
+    echo $1
+    kubectl exec -it $(echo $1) -- sh
+}
 
 # cd alias
 alias ..='cd ..'
-alias cdg='cd ~/src/github.com/marcin-janas/'
+alias cdg='cd ~/src/github.com/marcin-janas'
 
 # other alias
+alias fzf='fzf --ansi --no-bold --tabstop=4 --color=light' #  Base scheme (dark|light|16|bw) and/or custom colors
 alias vi='vim'
+alias v='vi $(fzf)'
+alias ranger='$(which ranger)'
 alias rr='ranger'
 alias cp='cp -i'
 alias mv='mv -i'
@@ -158,10 +195,11 @@ alias wget='wget -c'
 alias grep='grep --color'
 alias s='sudo su -'
 alias x='startx'
-alias recd='recordmydesktop --no-cursor --windowid $(xwininfo -display :0 | grep "id: 0x" | grep -Eo "0x[a-z0-9]+")'
-alias rdpw="rdesktop -u $USER -d $(dnsdomainname) 106.120.111.36 -g 1674x1028 -r disk:share=/home/$USER/share -a 24 -K"
-alias rl="source /home/$USER/.bashrc; echo Reload ~/.bashrc"
-alias cds="cd /home/$USER/src/"
+# alias recd='recordmydesktop --no-cursor --windowid $(xwininfo -display :0 | grep "id: 0x" | grep -Eo "0x[a-z0-9]+")'
+# alias rdpw="rdesktop -u $USER -d $(dnsdomainname) 106.120.111.36 -g 1674x1028 -r disk:share=/home/$USER/share -a 24 -K"
+alias rl="source ~/.bashrc; echo Reload ~/.bashrc"
+alias rc="vi ~/.bashrc; source ~/.bashrc; echo Reload ~/.bashrc"
+# alias cds="cd ~/src/; cd $(fzf $(ls .))"
 alias am='alsamixer  -g'
 # alias which='type -a'
 
@@ -171,3 +209,9 @@ alias dl='d container ls --all'
 alias dp='d ps -a'
 alias dk='d kill'
 alias de='d exec -it'
+alias dil='d image list'
+
+function dsh() {
+    echo $1
+    docker run -v ~/tmp:/tmp -it --entrypoint bash $1
+}
