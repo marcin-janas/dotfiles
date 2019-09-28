@@ -1,9 +1,11 @@
+" https://github.com/hashivim/vim-terraform.git
 " https://github.com/w0rp/ale.git
 " https://github.com/Shougo/neocomplete.vim.git
 " https://github.com/davidhalter/jedi-vim.git
 " https://github.com/tell-k/vim-autopep8.git
 " https://github.com/tpope/vim-fugitive.git
 " https://github.com/mhinz/vim-signify.git
+" https://github.com/fatih/vim-go.git
 
 " @ the good beginning
     filetype plugin indent on
