@@ -131,7 +131,8 @@
 
 " show whitespace
     set list
-    set listchars=tab:»·,trail:·,extends:>,precedes:< " without EOL
+    set listchars=tab:\│\ ,trail:\·,extends:>,precedes:< " without EOL
+    " set list lcs=tab:\│\·
     " set listchars=eol:¶,tab:»·,trail:·,extends:>,precedes:< " with EOL
 
 " netrw
@@ -491,8 +492,8 @@
     hi ErrorMsg cterm=none ctermfg=1 ctermbg=255
     hi WarningMsg cterm=none ctermfg=1 ctermbg=255
     hi ModeMsg cterm=none ctermfg=243
-    hi Identifier cterm=none ctermfg=240
-    hi Operator cterm=none ctermfg=240
+    hi Identifier cterm=none ctermfg=209
+    hi Operator cterm=none ctermfg=241
     hi PreProc cterm=none ctermfg=26
     hi Function cterm=none ctermfg=209
     hi Visual cterm=none ctermbg=254
@@ -501,8 +502,9 @@
     hi Todo cterm=none ctermfg=brown ctermbg=255
     hi Type cterm=none ctermfg=99
     hi Special cterm=none ctermfg=none
+    hi SpecialKey cterm=none ctermfg=253 ctermbg=none
+    hi Conceal cterm=none ctermfg=255
     hi Underlined cterm=none ctermfg=none
-    hi SpecialKey cterm=none ctermbg=none ctermfg=248
     hi String cterm=none ctermfg=36
     hi Number cterm=none ctermfg=197
     hi Keyword cterm=none ctermfg=26
@@ -539,9 +541,9 @@
 
     " diff
         hi DiffAdd cterm=none ctermfg=none ctermbg=121
-        hi DiffChange cterm=none ctermbg=229 ctermfg=none
+        hi DiffChange cterm=none ctermbg=230 ctermfg=none
         hi DiffDelete cterm=none ctermfg=none ctermbg=224
-        hi DiffText cterm=none ctermfg=none ctermbg=226
+        hi DiffText cterm=none ctermfg=none ctermbg=229
 
     " signify
         hi SignColumn cterm=none ctermbg=255 ctermfg=0
