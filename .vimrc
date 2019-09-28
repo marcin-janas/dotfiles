@@ -323,6 +323,10 @@
     " nnoremap ; :
     " nnoremap : ;
 
+" trans
+    xnoremap <silent> <leader>te <esc>:'<,'>:!trans -j -b pl:en<CR>
+    xnoremap <silent> <leader>tp <esc>:'<,'>:!trans -j -b en:pl<CR>
+
 " ^functions
 " CopyModeToggle()
     function! CopyModeToggle()
