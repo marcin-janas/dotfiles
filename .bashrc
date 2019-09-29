@@ -1,7 +1,3 @@
-source ~/bin/terminal_color.sh
-source ~/bin/ah.sh
-source <(kubectl completion bash)
-
 # set
 set -o noclobber
 set -o notify
@@ -12,10 +8,18 @@ shopt -s cdspell
 shopt -s checkwinsize
 shopt -s histappend
 shopt -s no_empty_cmd_completion
-shopt -s cdspell
+shopt -s autocd
 shopt -s checkhash
 shopt -s cmdhist
 shopt -s extglob
+shopt -s globstar
+shopt -s nocaseglob
+shopt -s dirspell direxpand
+
+# source
+source ~/bin/terminal_color.sh
+source ~/bin/ah.sh
+source <(kubectl completion bash)
 
 # export
 export HISTCONTROL=ignoreboth
@@ -23,13 +27,13 @@ export HISTSIZE=100000
 export HISTTIMEFORMAT="%Y-%m-%d_%H:%M:%S_%a  "
 export HISTIGNORE="&:bg:fg:ll:h"
 export IGNOREEOF=1 # ctrl+d must pressed twice to exit Bash
-export PATH=$PATH:~/bin
+export PATH=~/bin:$PATH
 
 # function
 export_ps1() {
-    BLUE="\033[01;34m";
-    CYAN="\[\033[1;36m\]";
-    GREEN="\[\033[1;32m\]";
+    BLUE="\033[34m";
+    CYAN="\[\033[36m\]";
+    GREEN="\[\033[32m\]";
     CLEAR="\033[00m";
     VENV=$(basename $VIRTUAL_ENV 2>/dev/null)
     echo -e $VENV $BLUE$PWD$CLEAR $(__git_ps1)
@@ -116,7 +120,7 @@ export PROMPT_COMMAND='history -n; history -a; export_ps1'
 
 # ls alias
 alias l='ls -FGla'
-alias ls='ls -FG'
+alias ls='ls -G'
 alias ll='ls -al'                              # long list format
 alias lk='ls -lk'                              # --block-size=1K
 alias lt='ls -ltr'                             # sort by date (mtime)
@@ -142,28 +146,32 @@ git-reset() {
   git reset --$1 HEAD~$2
 }
 
-alias g='git'
-alias ga='g add'
-alias gb='g branch'
-alias gc='g commit -s -m'
+alias ga='git add'
+alias gb='git branch'
+alias gc='git commit -s -m'
 alias gco=git-checkout
-alias gcom='g checkout master'
-alias gd='g diff'
-alias gdh='g diff HEAD'
-alias gl='g log --color --graph --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset" --abbrev-commit'
-alias glf='g log --follow --'
+alias gcom='git checkout master'
+alias gcop='git checkout production'
+alias gcob='git checkout -b'
+alias gd='git diff'
+alias gdh='git diff HEAD'
+alias gl='git log --color --graph --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset" --abbrev-commit'
+alias glf='git log --follow --'
 alias gp='git pull'
-alias gpfm='g push-for-master'
-alias gpusho='g push origin $(git rev-parse --abbrev-ref HEAD)'
+alias gpfm='git push-for-master'
+alias gpusho='git push origin $(git rev-parse --abbrev-ref HEAD)'
+alias gpullo='git pull origin $(git rev-parse --abbrev-ref HEAD)'
 alias grsoft='git-reset soft'
-alias gs='g status'
-alias gsh='g show'
-alias gsno='g show --name-only'
+alias gs='git status'
+alias gsh='git show'
+alias gsno='git show --name-only'
 
 # kubectl alias
-alias kdp='kubectl delete pod'
+alias kdelp='kubectl delete pod'
 alias kgp='kubectl get pods'
+alias kge='kubectl get events'
 alias klg='kubectl logs -f'
+alias kdp='kubectl describe pod'
 
 function ksh() {
     echo $1
@@ -173,6 +181,7 @@ function ksh() {
 # cd alias
 alias ..='cd ..'
 alias cdg='cd ~/src/github.com/marcin-janas'
+alias cdf='cd ~/src/github.com/;cd $(find . -type d -not -path "*/.git/*"|fzf)'
 
 # other alias
 alias fzf='fzf --ansi --no-bold --tabstop=4 --color=light' #  Base scheme (dark|light|16|bw) and/or custom colors
@@ -188,11 +197,13 @@ alias ln='ln -i -n'
 alias psg='ps -ef | grep $1'
 alias h='history | grep $1'
 alias j='jobs'
+alias f='find . ! -path "*.git/*"'
 alias less='less -R --tabs=4'
 alias more='less'
 alias mkdir='mkdir -p -v'
 alias wget='wget -c'
 alias grep='grep --color'
+alias g='grep -IErni --exclude-dir .git '
 alias s='sudo su -'
 alias x='startx'
 # alias recd='recordmydesktop --no-cursor --windowid $(xwininfo -display :0 | grep "id: 0x" | grep -Eo "0x[a-z0-9]+")'
@@ -215,3 +226,5 @@ function dsh() {
     echo $1
     docker run -v ~/tmp:/tmp -it --entrypoint bash $1
 }
+
+# timeout 5 bash -c 'cat < /dev/null > /dev/tcp/HOST/PORT'; echo $?
