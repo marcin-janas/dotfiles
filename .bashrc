@@ -22,6 +22,7 @@ source ~/bin/ah.sh
 source <(kubectl completion bash)
 
 # export
+export EDITOR=vim
 export LC_ALL=en_US.UTF-8
 export HISTCONTROL=ignoreboth
 export HISTSIZE=100000
@@ -30,7 +31,6 @@ export HISTIGNORE="&:bg:fg:ll:h"
 export IGNOREEOF=1 # ctrl+d must pressed twice to exit Bash
 export PATH=~/bin:~/Library/Python/3.7/bin:$PATH
 
-# function
 export_ps1() {
     PS1="\n\n\n\w  $(git rev-parse --abbrev-ref HEAD 2>/dev/null||echo none)\n"
 }
@@ -38,7 +38,7 @@ export_ps1() {
 export PROMPT_COMMAND='history -n; history -a; export_ps1'
 export GOPATH=$HOME
 
-# ls alias
+# ls
 alias l='ls -FGla'
 alias ls='ls -G'
 alias ll='ls -al'                              # long list format
@@ -87,12 +87,33 @@ alias gsh='git show'
 alias gsno='git show --name-only'
 alias gbdm='git checkout master && git branch --merged |grep -vE "master|\*"|xargs -n 1 git branch -d'
 
-# kubectl alias
-alias kdelp='kubectl delete pod'
-alias kgp='kubectl get pods'
-alias kge='kubectl get events'
-alias klg='kubectl logs -f'
-alias kdp='kubectl describe pod'
+# kubectl
+alias k='kubectl'
+alias kl='k logs -f'
+# delete
+alias kdel='k delete'
+alias kdelp='kdel pod'
+alias kdelc='kdel cronjob'
+alias kdels='kdel services'
+alias kdeld='kdel deployment'
+alias kdele='kdel endpoints'
+# get
+alias kg='k get'
+alias kge='kg events'
+alias kgp='kg pods'
+alias kgc='kg cronjob'
+alias kgs='kg services'
+alias kgd='kg deployments'
+alias kgn='kg nodes'
+alias kge='kg endpoints'
+# describe
+alias kd='k describe'
+alias kdp='kd pod'
+alias kdc='kd cronjob'
+alias kds='kd services'
+alias kdd='kd deployments'
+alias kdn='kd node'
+alias kde='kd endpoints'
 
 function ksh() {
     echo $1
@@ -138,6 +159,7 @@ alias vrc="vi ~/.vimrc"
 # alias cds="cd ~/src/; cd $(fzf $(ls .))"
 alias am='alsamixer  -g'
 # alias which='type -a'
+# alias aws='docker run --rm -ti -v ~/.aws:/root/.aws -v $(pwd):/aws amazon/aws-cli'
 
 # docker alias
 alias d='docker'
@@ -146,6 +168,9 @@ alias dp='d ps -a'
 alias dk='d kill'
 alias de='d exec -it'
 alias dil='d image list'
+
+# aws-cli
+alias aws='docker run --rm -ti -v ~/.aws:/root/.aws -v $(pwd):/aws amazon/aws-cli'
 
 function dsh() {
     echo $1
