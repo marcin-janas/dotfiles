@@ -22,21 +22,21 @@ source ~/bin/ah.sh
 source <(kubectl completion bash)
 
 # export
+export_ps1() {
+    PS1="\n\n\n\w  $(git rev-parse --abbrev-ref HEAD 2>/dev/null||echo none)\n"
+}
+
+export PATH="$PATH:~/bin"
+export PROMPT_COMMAND='history -n; history -a; export_ps1'
 export EDITOR=vim
+export GOPATH=$HOME
 export LC_ALL=en_US.UTF-8
 export HISTCONTROL=ignoreboth
 export HISTSIZE=100000
 export HISTTIMEFORMAT="%Y-%m-%d_%H:%M:%S_%a  "
 export HISTIGNORE="&:bg:fg:ll:h"
 export IGNOREEOF=1 # ctrl+d must pressed twice to exit Bash
-export PATH=~/bin:~/Library/Python/3.7/bin:$PATH
-
-export_ps1() {
-    PS1="\n\n\n\w  $(git rev-parse --abbrev-ref HEAD 2>/dev/null||echo none)\n"
-}
-
-export PROMPT_COMMAND='history -n; history -a; export_ps1'
-export GOPATH=$HOME
+export GITHUB_TOKEN=$(git config  --get github.token)
 
 # ls
 alias l='ls -FGla'
@@ -161,20 +161,22 @@ alias am='alsamixer  -g'
 # alias which='type -a'
 # alias aws='docker run --rm -ti -v ~/.aws:/root/.aws -v $(pwd):/aws amazon/aws-cli'
 
-# docker alias
+# docker
 alias d='docker'
 alias dl='d container ls --all'
 alias dp='d ps -a'
 alias dk='d kill'
 alias de='d exec -it'
 alias dil='d image list'
+alias dsh='d run -v ~/tmp:/tmp -it --entrypoint sh --user root'
 
-# aws-cli
-alias aws='docker run --rm -ti -v ~/.aws:/root/.aws -v $(pwd):/aws amazon/aws-cli'
+# aws
+alias aws='docker run --rm -ti -e AWS_PAGER="" -v ~/.aws:/root/.aws -v $(pwd):/aws amazon/aws-cli'
+alias sqsls="aws --profile ${AWS_PROFILE} sqs list-queues|grep https"
+alias snsls="aws --profile ${AWS_PROFILE} sns list-topics|grep TopicArn"
+alias rdsls="aws --profile ${AWS_PROFILE} rds describe-db-instances|grep \"DBInstanceIdentifier\""
 
-function dsh() {
-    echo $1
-    docker run -v ~/tmp:/tmp -it --entrypoint bash $1
-}
+# fix sound on macos
+alias fixsound="sudo kill -9 $(ps ax|grep 'coreaudio[a-z]' | awk '{print $1}')"
 
 # timeout 5 bash -c 'cat < /dev/null > /dev/tcp/HOST/PORT'; echo $?
