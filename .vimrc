@@ -283,21 +283,24 @@
     inoremap '<cr> '<cr>
 
     inoremap ( ()<left>
+    inoremap (( (
     inoremap (<space> (<space>
     inoremap (<cr> (<cr>
 
     inoremap [ []<left>
+    inoremap [[ [
     inoremap [<space> [<space>
     inoremap [<cr> [<cr>
 
     inoremap < <><left>
+    inoremap << <
     inoremap <<space> <<space>
     inoremap <<cr> <<cr>
 
     inoremap { {}<left>
+    inoremap {{ {
     inoremap {<space> {<space>
-    inoremap {<cr> {<cr><cr>}<left><bs><up><tab><tab>
-    inoremap {;<cr> {<cr><cr>};<left><left><bs><up><tab><tab>
+    inoremap {<cr> {<cr>
 
 " custom comma motion mapping
     nmap di, f,dT,
@@ -364,6 +367,14 @@
     let g:signify_sign_change="~"
 
 " special options for Go
+    au BufRead,BufNewFile *.go iab ti type interface {{<cr>}<esc>k0ea
+    au BufRead,BufNewFile *.go iab ts type struct {{<cr>}<esc>k0ea
+    au BufRead,BufNewFile *.go iab ife if err != nil {{<cr><cr>}<esc>ki
+    au BufRead,BufNewFile *.go iab fu func(() {{<cr>}<esc>k0f(i
+    au BufRead,BufNewFile *.go iab fm func main(() {{<cr><cr>}<esc>ki
+    au BufRead,BufNewFile *.go iab fe func(() error {{<cr>}<esc>k0f(i
+    au BufRead,BufNewFile *.go iab pkg package
+
 	augroup go
 		autocmd!
 		autocmd FileType go nmap <silent> <Leader>v <Plug>(go-def-vertical)
@@ -392,41 +403,14 @@
     let g:go_metalinter_autosave_enabled = ["vet", "gocritic", "golint", "errcheck"]
     let g:go_metalinter_command = "golangci-lint"
 
-" special options for Python
-    let python_highlight_all=1
-    au FileType python syn keyword pythonDecorator self False class finally is return None continue for lambda try True from nonlocal while and del global not with as elif if or yield assert else import pass break except in raise async await
-    au BufRead,BufNewFile *.py set shiftwidth=4
-    au BufRead,BufNewFile *.py set softtabstop=4
-    au BufRead,BufNewFile *.py set expandtab
-    au BufRead,BufNewFile *.py iab ifm if __name__ == '__main__':<del><del>
+" special options for Terraform
+    au BufWritePre *.tf :%s/\"\.\/modules/\"\.\.\/modules/e
+    let g:terraform_fmt_on_save=1
 
 " special options for Yaml
     au BufRead,BufNewFile *.{yml,yaml} set shiftwidth=2
     au BufRead,BufNewFile *.{yml,yaml} set softtabstop=2
     au BufRead,BufNewFile *.{yml,yaml} set expandtab
-
-" special options for Jinja2
-    au BufRead,BufNewFile *.{j2} iab % % %<left><left>
-
-" special options for C/C++
-    au BufRead,BufNewFile *.{c,cpp,h,hpp} set shiftwidth=4
-    au BufRead,BufNewFile *.{c,cpp,h,hpp} set softtabstop=4
-    au BufRead,BufNewFile * iab #i #include <><del><del>
-    inoremap /* /*  */<left><left><left>
-
-" special options for Perl
-    au BufRead,BufNewFile *.{pl,pm} set shiftwidth=4
-    au BufRead,BufNewFile *.{pl,pm} set softtabstop=4
-    au BufRead,BufNewFile *.{pl,pm} set noexpandtab
-
-" special options for Ruby
-    au BufRead,BufNewFile *.{rb,rake} set shiftwidth=2
-    au BufRead,BufNewFile *.{rb,rake} set softtabstop=2
-    au BufRead,BufNewFile *.{rb,rake} set expandtab
-
-" special options for Terraform
-    au BufWritePre *.tf :%s/\"\.\/modules/\"\.\.\/modules/e
-    let g:terraform_fmt_on_save=1
 
 " colorscheme
     hi clear
@@ -539,10 +523,6 @@
         hi link vimhictermcolor vimhiattrib
         hi link vimgroupname vimgroup
 
-    " python
-        hi pythonexceptions ctermfg=0 cterm=none
-        hi pythondecoratorname cterm=none ctermfg=brown
-
     " sh
         hi shvariable ctermfg=240 cterm=none
         hi shderefsimple ctermfg=240 cterm=none
@@ -554,9 +534,6 @@
         hi htmltag cterm=none ctermfg=gray
         hi htmlendtag cterm=none ctermfg=gray
         hi htmlarg cterm=none  ctermfg=27
-
-    " perl
-        hi perlconditional cterm=none
 
     " link
         hi link user0 normal
