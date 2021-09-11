@@ -273,6 +273,9 @@
     nnoremap <c-k> <c-w>k
     nnoremap <c-l> <c-w>l
 
+    " nnoremap <c-j> 10jzz
+    " nnoremap <c-k> 10kzz
+
 " automatically closing quotation mark, brackets etc.
     inoremap " ""<left>
     inoremap "<space> "<space>
@@ -396,7 +399,7 @@
     let g:go_list_type = "quickfix"
     let g:go_metalinter_autosave = 1
     let g:go_metalinter_deadline = "5s"
-    " let g:go_autodetect_gopath = 1
+    let g:go_autodetect_gopath = 1
     let g:go_def_mode='gopls'
     let g:go_info_mode='gopls'
     " let g:go_metalinter_enabled = ["deadcode", "errcheck", "gosimple", "ineffassign", "staticcheck", "structcheck", "typecheck", "unused", "varcheck"]
