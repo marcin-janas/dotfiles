@@ -96,6 +96,7 @@ alias kdelp='kdel pod'
 alias kdelc='kdel cronjob'
 alias kdels='kdel services'
 alias kdeld='kdel deployment'
+alias kdelns='kdel namespace'
 alias kdele='kdel endpoints'
 # get
 alias kg='k get'
@@ -104,6 +105,7 @@ alias kgp='kg pods'
 alias kgc='kg cronjob'
 alias kgs='kg services'
 alias kgd='kg deployments'
+alias kgns='kg namespaces'
 alias kgn='kg nodes'
 alias kge='kg endpoints'
 # describe
@@ -112,12 +114,13 @@ alias kdp='kd pod'
 alias kdc='kd cronjob'
 alias kds='kd services'
 alias kdd='kd deployments'
+alias kdns='kd namespaces'
 alias kdn='kd node'
 alias kde='kd endpoints'
 
 function ksh() {
     echo $1
-    kubectl exec -it $(echo $1) -- sh
+    kubectl exec -it $(echo $@) -- sh
 }
 
 # cd alias
