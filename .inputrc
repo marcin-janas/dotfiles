@@ -31,7 +31,8 @@ $endif
 
 
 "\C-w": backward-kill-word
-"\C-f": kill-word
 "\C-u": kill-line
 "\C-l": clear-screen
-"\C-v": "vi\n"
+"\C-v": "vi $(fzf)\n"
+"\C-f": "of\n"
+"\C-g": "gcd\n"
