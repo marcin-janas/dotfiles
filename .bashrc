@@ -24,7 +24,7 @@ export_ps1() {
     PS1="\n\n\n\u@\h:\w ($(git rev-parse --abbrev-ref HEAD 2>/dev/null||echo none))\n"
 }
 
-export PATH="$PATH:/usr/local/bin:~/bin"
+export PATH="$HOME/bin:/usr/local/bin:$PATH"
 export PROMPT_COMMAND='history -n; history -a; export_ps1'
 export EDITOR=nvim
 export GOPATH=$HOME
