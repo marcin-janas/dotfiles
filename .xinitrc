@@ -16,3 +16,4 @@ sleep 1s; done &
 setxkbmap pl
 
 exec dwm
+
