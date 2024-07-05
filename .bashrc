@@ -16,9 +16,6 @@ shopt -s globstar
 shopt -s nocaseglob
 shopt -s dirspell direxpand
 
-# source
-source ~/bin/ah.sh
-
 # export
 export_ps1() {
     PS1="\n\n\n\u@\h:\w ($(git rev-parse --abbrev-ref HEAD 2>/dev/null||echo none))\n"
@@ -40,9 +37,6 @@ export GITHUB_TOKEN=$(git config  --get github.token)
 # gdk
 export GDK_DPI_SCALE=1.4
 export GDK_SCALE=1.4
-
-alias takess='shotgun $(hacksaw -f "-i %i -g %g") - | xclip -t "image/png" -selection clipboard'
-alias bsp='[[ $(pacmd list-cards|grep "active profile"|grep a2dp_sink 1>/dev/null; echo $?) == 1 ]] && pacmd set-card-profile bluez_card.38_18_4C_FA_A2_DD a2dp_sink || pacmd set-card-profile bluez_card.38_18_4C_FA_A2_DD handsfree_head_unit'
 
 # nvim
 alias vi='nvim -O'
@@ -76,6 +70,7 @@ git-reset() {
   git reset --$1 HEAD~$2
 }
 
+alias tmux='TERM=xterm-256color tmux'
 alias gcd='cd $(find ~/src  -type f -name config|sed "s/.git\/config//"|fzf)'
 alias ga='git add'
 alias gb='git branch'

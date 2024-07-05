@@ -12,11 +12,6 @@ set mark-symlinked-directories on
 set menu-complete-display-prefix on
 set colored-completion-prefix on
 set bind-tty-special-chars off
-#set completion-map-case on
-#set history-preserve-point on
-#set mark-modified-lines on
-#set match-hidden-files on
-
 
 $if mode=vi
     set keymap vi-command
@@ -33,6 +28,3 @@ $endif
 "\C-w": backward-kill-word
 "\C-u": kill-line
 "\C-l": clear-screen
-"\C-v": "vi $(fzf)\n"
-"\C-f": "of\n"
-"\C-g": "gcd\n"
