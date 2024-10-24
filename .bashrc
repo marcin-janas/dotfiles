@@ -74,7 +74,7 @@ alias tmux='TERM=xterm-256color tmux'
 alias gcd='cd $(find ~/src  -type f -name config|sed "s/.git\/config//"|fzf)'
 alias ga='git add'
 alias gb='git branch'
-alias gc='git commit -s -m'
+alias gc='git commit -S -s -m'
 alias gco=git-checkout
 alias gcom='git checkout master'
 alias gcop='git checkout production'
